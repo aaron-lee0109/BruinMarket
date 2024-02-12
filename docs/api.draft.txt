@@ -1,0 +1,147 @@
+User
+--------------------------------------------------------------------------------------
+Fields		: Type
+--------------------------------------------------------------------------------------
+_id		: string (required, unique)
+name		: string (required)
+email		: string (required, unique)
+password	: string (required) //hashed
+photo		: file
+bio		: string
+role		: enum [moderator, admin] (default [])
+enabled		: boolean (default true)
+createdBy 	: string (ref: User) (required)
+createdOn 	: datetime (required)
+modifiedOn	: datetime (required)
+--------------------------------------------------------------------------------------
+URL path 	: Controller
+--------------------------------------------------------------------------------------
+/user/{id}		: userGet	: input userID[24], output User //for admins
+/user/{id}[PUT]		: userSet	: input parameters of User, output boolean //for admins
+/user/profile		: profileGet	: (for current User from context), output User //for users 
+/user/profile[PUT]	: profileSet	: input parameters of User, output boolean
+/user/register		: userRegister	: input name, email, password, output boolean
+/user/logon[POST]	: userLogin	: input email, password, output User & Auth Token
+/user/logout[POST]	: userLogout	: output boolean
+/user/list		: userList	: parameter search type string
+/user/report[POST]	: userReport	: input userID, reason, (createdBy from context), output boolean
+======================================================================================
+
+Item
+--------------------------------------------------------------------------------------
+Fields		: Type
+--------------------------------------------------------------------------------------
+_id		: string (required, unique)
+title		: string (required)
+details		: string
+price		: decimal (required)
+categoryID	: string (ref: Category) (required)
+published	: boolean (default true)
+publishedDate	: datetime (required)
+images		: list of links to files
+enabled		: boolean (default true)
+createdBy 	: string (ref: User) ???
+createdOn 	: datetime (required)
+modifiedOn	: datetime (required)
+--------------------------------------------------------------------------------------
+URL path 	: Controller
+--------------------------------------------------------------------------------------
+/item/{id}		: itemGet		: input itemID[24], output Item
+/item/list		: itemList		: parameter search type string      //for users 
+/item[POST]		: itemAdd		: input title, details, price, categoryID, published, files, output Item
+/item/{id}[PUT]		: itemSet		: input title, details, price, categoryID, published, output Item
+/item/{id}[DELETE]	: itemDel		: input itemID, output boolean
+/item/alllist		: itemFullList		: parameter search type string           //for admins
+======================================================================================
+
+Message
+--------------------------------------------------------------------------------------
+Fields		: Type
+--------------------------------------------------------------------------------------
+_id		: string (required, unique)
+itemID		: string (ref: Item) (required)
+sellerID	: string (ref: User) (required)
+buyerID		: string (ref: User) (required)
+message		: string (required)
+enabled		: boolean (default true)
+createdBy 	: string (ref: User) (required)
+createdOn 	: datetime (required)
+modifiedOn	: datetime (required)
+--------------------------------------------------------------------------------------
+URL path 		: Controller
+--------------------------------------------------------------------------------------
+/message[POST]		: messageAdd		: input message, itemID?, sellerID?, buyerID?, output boolean
+/message/list		: messageList		: input itemID, buyerID?, output list of messages //chat
+/message/{id}[DELETE]	: messageDelete		: input messageID, output boolean
+======================================================================================
+
+Category
+--------------------------------------------------------------------------------------
+Fields		: Type
+--------------------------------------------------------------------------------------
+_id		: string (required, unique)
+parentID	: string (ref: Category) (required)
+title		: string (required, unique)
+enabled		: boolean (default true)
+createdBy 	: string (ref: User) (required)
+createdOn 	: datetime (required)
+modifiedOn	: datetime (required)
+--------------------------------------------------------------------------------------
+URL path 		: Controller
+--------------------------------------------------------------------------------------
+/category/list		: categoryList	: output tree //for users
+/category[POST]		: categoryAdd	: input title, parentID (ref: Category), output boolean //new child category
+/category/{id}[PUT]	: categorySet	: input, ID, title, parentID (ref: Category), output boolean //change name and/or parent
+/category/{id}[DELETE]	: categoryDel	: input ID, output boolean
+======================================================================================
+
+ItemReport
+--------------------------------------------------------------------------------------
+Fields		: Type
+--------------------------------------------------------------------------------------
+_id		: string (required, unique)
+itemID		: string (ref: Item) (required)
+reason		: string (required)
+status		: enum [recieved,reviewing,resolved,decline] (default "recieved")
+enabled		: boolean (default true)
+createdBy 	: string (ref: User)
+createdOn 	: datetime (required)
+modifiedOn	: datetime (required)
+--------------------------------------------------------------------------------------
+URL path 		: Controller
+--------------------------------------------------------------------------------------
+/item/report/{id}[POST]	: itemReportAdd		: input itemID[24], createdBy (from context), reason, output boolean
+/item/report/list	: itemReportList 	: input search string 	//for moderators
+/item/report/{id}[PUT]	: itemReportSet 	: input status, output boolean	//for moderators
+======================================================================================
+
+UserReport
+--------------------------------------------------------------------------------------
+Fields		: Type
+--------------------------------------------------------------------------------------
+_id		: string (required, unique)
+userID		: string (ref: User) (required)
+reason		: string (required)
+status		: enum [recieved,reviewing,resolved,decline] (default "recieved")
+enabled		: boolean (default true)
+createdBy 	: string (ref: User)
+createdOn 	: datetime (required)
+modifiedOn	: datetime (required)
+--------------------------------------------------------------------------------------
+URL path 		: Controller
+--------------------------------------------------------------------------------------
+/user/report[POST]	: userReportAdd 	: input reason, createdBy (from context) output boolean //for users
+/user/report/list	: userReportList 	: parameter search type string 	//for moderators
+/user/report/{id}[PUT]	: userReportSet 	: input status, output boolean	//for moderators
+======================================================================================
+
+Something else?
+--------------------------------------------------------------------------------------
+Fields		: Type
+--------------------------------------------------------------------------------------
+
+--------------------------------------------------------------------------------------
+URL path 	: Controller
+--------------------------------------------------------------------------------------
+
+======================================================================================
