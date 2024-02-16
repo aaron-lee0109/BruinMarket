@@ -1,35 +1,68 @@
 //Register.js
 
 import React, { useState } from 'react';
-import { auth } from './Config';
+import { Link,  } from 'react-router-dom';
+import { auth, db } from './Config';
 import { createUserWithEmailAndPassword } from '@firebase/auth';
-import { Navbar } from './Navbar';
 
 const Register = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState('');
+    const [bio, setBio] = useState('');
+    const [profilePicture, setProfilePicture] = useState(null);
     const [error, setError] = useState(null);
 
     const handleRegister = async (e) => {
         e.preventDefault();
         try{
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            console.log("User registered successfully:", userCredential.user.uid);
+            await userCredential.user.updateProfile({
+                displayName: name,
+            })
+            await db.collection('profiles').doc(userCredential.user.uid).set({
+                name,
+                bio,
+            });
+    
         }
         catch (error){
             setError(error.message);
         }
     };
 
+    const handleProfilePictureChange = (e) => {
+        const file = e.target.files[0];
+        setProfilePicture(file);
+    };
+
     return (
         <div>
             <h2>Register</h2>
             <form onSubmit={handleRegister}>
-                <label>Email:</label>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-                <label>Password:</label>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
-                <button type="submit">Register</button>
+                <div>
+                    <label>Email:</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                </div>
+                <div>
+                    <label>Password:</label>
+                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                </div>
+                <div>    
+                    <label>Name:</label>
+                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                </div>
+                <div>
+                    <label>Bio:</label>
+                    <input value={bio} onChange={(e) => setBio(e.target.value)} />
+                </div>
+                <div>
+                    <label>Profile Picture:</label>
+                    <input type="file" accept="image/*" onChange={handleProfilePictureChange} />
+                </div>
+                <div>
+                    <button type="submit">Register</button>
+                </div>
             </form>
             {error && <div>{error}</div>}
         </div>
