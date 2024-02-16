@@ -4,6 +4,7 @@ import React from 'react';
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './styles.css'
 import { Home } from './Home'
+import Profile from './Profile'
 import { AddProduct } from './AddProduct'
 import Authentication from './Authentication';
 import Register from './Register';
@@ -15,6 +16,7 @@ const App = () => {
         <Route path='/' element={<Home />} />
         <Route path='authentication' element={<Authentication />} />
         <Route path='register' element={<Register />} />
+        <Route path='profile/:userId' element={<Profile />} />
         <Route path='addproduct' element={<AddProduct />} />
       </Routes>
     </BrowserRouter>

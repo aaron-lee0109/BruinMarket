@@ -8,6 +8,7 @@ export const Navbar = () => {
         <div>
             <Link to="/" className='nav-link'>Home</Link>
             <Link to="/authentication" className='nav-link'>Login/Register</Link>
+            <Link to="/profile/${userId}" className='nav-link'>Profile</Link>
             <Link to="/addproduct" className='nav-link'>Add Product</Link>
         </div>
     );
