@@ -1,7 +1,7 @@
 import React from 'react'
 import { Navbar } from './Navbar'
 import { Products } from './Products'
-import { db } from "../config/Config";
+import { db } from "./Config";
 import { collection, getDocs } from "firebase/firestore";
 
 export const Home = () => {
