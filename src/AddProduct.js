@@ -1,8 +1,11 @@
+//AddProduct.js
+
 import React, { useState } from "react";
 import { storage, db } from "./Config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { v4 } from "uuid";
+import { Navbar } from './Navbar'
 
 export const AddProduct = () => {
 
@@ -72,6 +75,7 @@ export const AddProduct = () => {
 
     return (
         <div className='container'>
+            <Navbar />
             <br/>
             <h2>Add your product</h2>
             <hr/>
