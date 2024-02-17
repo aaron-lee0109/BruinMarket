@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { Link,  } from 'react-router-dom';
 import { auth, db } from './Config';
-import { createUserWithEmailAndPassword } from '@firebase/auth';
+import { createUserWithEmailAndPassword, sendEmailVerification } from '@firebase/auth';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -17,6 +17,7 @@ const Register = () => {
         e.preventDefault();
         try{
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await sendEmailVerification(auth.currentUser);
             await userCredential.user.updateProfile({
                 displayName: name,
             })
