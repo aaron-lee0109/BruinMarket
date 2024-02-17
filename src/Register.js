@@ -17,6 +17,7 @@ const Register = () => {
         e.preventDefault();
         try{
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            await sendEmailVerification(auth.currentUser);
             await userCredential.user.updateProfile({
                 displayName: name,
             })
