@@ -16,3 +16,15 @@ code {
   margin-bottom: 10px;
   display: block;
 }
+
+.item-chat {
+  cursor: pointer;
+}
+
+.item-chat:hover {
+  background-color: #ffffcc;
+}
+
+.active-chat {
+  background-color: #ffcccc;
+}

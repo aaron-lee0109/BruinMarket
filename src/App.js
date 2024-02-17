@@ -8,6 +8,7 @@ import Profile from './Profile'
 import { AddProduct } from './AddProduct'
 import Authentication from './Authentication';
 import Register from './Register';
+import Chats from './views/Chats';
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
         <Route path='register' element={<Register />} />
         <Route path='profile/:userId' element={<Profile />} />
         <Route path='addproduct' element={<AddProduct />} />
+        <Route path='chat' element={<Chats />} />
       </Routes>
     </BrowserRouter>
   )
