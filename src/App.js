@@ -8,18 +8,22 @@ import Profile from "./Profile";
 import { AddProduct } from "./AddProduct";
 import Authentication from "./Authentication";
 import Register from "./Register";
+import { AuthContext } from './AuthContext';
+import PrivateRoute from "./PrivateRoute"
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="authentication" element={<Authentication />} />
-        <Route path="register" element={<Register />} />
-        <Route path="profile/:userId" element={<Profile />} />
-        <Route path="addproduct" element={<AddProduct />} />
-      </Routes>
-    </BrowserRouter>
+    <AuthContext>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element= {<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="authentication" element={<Authentication />} />
+          <Route path="register" element={<Register />} />
+          <Route path="profile/:userId" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="addproduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
+        </Routes>
+      </BrowserRouter>
+    </AuthContext>
   );
 };
 
