@@ -23,6 +23,9 @@ export const Navbar = () => {
           <Link to="/addproduct" className="nav-link">
             Add Product
           </Link>
+          <Link to="/chat" className="nav-link">
+            Chat
+          </Link>
         </div>
       </nav>
     </div>
