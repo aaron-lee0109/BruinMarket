@@ -1,9 +1,10 @@
 //Register.js
 
 import React, { useState } from 'react';
-import { Link,  } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { auth, db } from './Config';
-import { createUserWithEmailAndPassword, sendEmailVerification } from '@firebase/auth';
+import { createUserWithEmailAndPassword, deleteUser, sendEmailVerification } from '@firebase/auth';
+
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -12,11 +13,17 @@ const Register = () => {
     const [bio, setBio] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
     const handleRegister = async (e) => {
         e.preventDefault();
         try{
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            if (!userCredential.user.email.endsWith("@ucla.edu")) {
+                alert("Invalid email! Please use a UCLA email.");
+                deleteUser(auth.currentUser);
+                return;
+            }
             await sendEmailVerification(auth.currentUser);
             await userCredential.user.updateProfile({
                 displayName: name,
@@ -25,7 +32,7 @@ const Register = () => {
                 name,
                 bio,
             });
-    
+            
         }
         catch (error){
             setError(error.message);

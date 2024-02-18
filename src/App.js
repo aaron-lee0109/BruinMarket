@@ -8,20 +8,24 @@ import Profile from "./Profile";
 import { AddProduct } from "./AddProduct";
 import Authentication from "./Authentication";
 import Register from "./Register";
+import { AuthContext } from './AuthContext';
+import PrivateRoute from "./PrivateRoute"
 import Chats from "./views/Chats";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="authentication" element={<Authentication />} />
-        <Route path="register" element={<Register />} />
-        <Route path="profile/:userId" element={<Profile />} />
-        <Route path="addproduct" element={<AddProduct />} />
-        <Route path="chat" element={<Chats />} />
+    <AuthContext>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element= {<PrivateRoute><Home /></PrivateRoute>} />
+          <Route path="authentication" element={<Authentication />} />
+          <Route path="register" element={<Register />} />
+          <Route path="profile/:userId" element={<PrivateRoute><Profile /></PrivateRoute>} />
+          <Route path="addproduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
+          <Route path="chat" element={<PrivateRoute><Chats /></PrivateRoute>} />
       </Routes>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AuthContext>
   );
 };
 

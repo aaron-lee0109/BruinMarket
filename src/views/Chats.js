@@ -3,8 +3,9 @@
 import { db } from '../Config';
 import { addDoc, collection, deleteDoc, doc, getDoc, getDocs, updateDoc, query, where, orderBy, limit } from '@firebase/firestore';
 import { useState, useEffect, useRef } from 'react';
+import { Navbar } from '../Navbar';
 
-import Col from 'react-bootstrap/Col';
+import { Col } from 'react-bootstrap';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -148,6 +149,7 @@ const ChatFeed = async () => {
   return (
     <div className="App">
       <h2>Chats <Button onClick={() => ChatFeed()}>Create test data</Button></h2>
+      <Navbar />
 
 
       <Row>
