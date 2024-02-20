@@ -19,7 +19,8 @@ const Register = () => {
         e.preventDefault();
         try{
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            if (!userCredential.user.email.endsWith("@ucla.edu")) {
+            if (!(userCredential.user.email.endsWith("@ucla.edu") || 
+                  userCredential.user.email.endsWith("@g.ucla.edu"))) {
                 alert("Invalid email! Please use a UCLA email.");
                 deleteUser(auth.currentUser);
                 return;
