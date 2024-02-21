@@ -13,6 +13,7 @@ export const AddProduct = () => {
     const[description, setDescription] = useState('');
     const[price, setPrice] = useState('');
     const[image, setImage] = useState(null);
+    const[category, setCategory] = useState('');
 
     const[imageError, setImageError] = useState('');
     const[successMsg, setSuccessMsg] = useState('');
@@ -73,6 +74,13 @@ export const AddProduct = () => {
         })
     }
 
+    // Define category options
+    const categories = ['Electronics', 'Clothing', 'Books', 'Home & Kitchen', 'Toys', 'Sports', 'Other'];
+    const handleCategoryChange = (e) => {
+        setCategory(e.target.value);
+    }
+
+
     return (
         <div className='container'>
             <Navbar />
@@ -96,9 +104,18 @@ export const AddProduct = () => {
                 <br/>
                 <input type="number" className='form-control' required onChange={(e)=>setPrice(e.target.value)} value={price} />
                 <br/>
+                <label>Product Category</label>
+                <br/>
+                <select className="form-control" value={category} required onChange={handleCategoryChange}>
+                    <option value="">Select Category</option>
+                    {categories.map((cat, index) => (
+                        <option key={index} value={cat}>{cat}</option>
+                    ))}
+                </select>
+                <br/>
                 <label>Product Image</label>
                 <br/>
-                <input type="file" id='file' className='form-control' onChange={handleProductImg} />
+                <input type="file" id='file' className='form-control' required onChange={handleProductImg} />
                 {imageError&&<>
                     <br/>
                     <div className='error-msg'>{imageError}</div>

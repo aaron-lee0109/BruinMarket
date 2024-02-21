@@ -284,6 +284,7 @@ function Chats() {
   // output list of messages
   return (
     <>
+    <Navbar />
       <h1>Messages
         <Button onClick={async () => {OpenChatWindow()}}>open chat window</Button>
       </h1>
