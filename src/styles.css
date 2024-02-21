@@ -106,14 +106,58 @@ code {
   background-color: rgb(255, 209, 0);
 }
 
+/* Chat section */
+
+.active-chat {
+  background-color: #cce0ff !important;
+}
+
+.chat-badge {
+  display: inline-block !important;
+  width: 10px !important;
+  height: 10px !important;
+  padding: 0 !important;
+
+}
+
+.chat-modal .modal-dialog {
+  min-width: 100% !important;
+  height: 90%;
+  min-height: 300px;
+}
+
+.chat-modal .modal-content {
+  height: 100%;
+  width: 90% !important;
+  margin: 0 auto;
+}
+
+.chat-product-image{
+  height: 50px;
+  width: 50px;
+}
+
+.chats-window {
+  max-height: calc(80vh - 30px);
+  min-height: calc(80vh - 30px);
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  border-right: 1px solid #cccccc;
+}
+
 .item-chat {
   cursor: pointer;
 }
 
 .item-chat:hover {
-  background-color: #ffffcc;
+  background-color: #eeeeee;
 }
 
-.active-chat {
-  background-color: #ffcccc;
+.message-window {
+  max-height: calc(80vh - 90px);
+  min-height: calc(80vh - 90px);
+  overflow-y: auto !important;
+  border-bottom: 1px solid #cccccc;
 }
+
+/* End of chat section */
