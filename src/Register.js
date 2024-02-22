@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { auth, db } from './Config';
-import { createUserWithEmailAndPassword, deleteUser, sendEmailVerification } from '@firebase/auth';
-
+import { auth, db, storage } from './Config';
+import { setDoc, doc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, deleteUser, sendEmailVerification, updateProfile } from 'firebase/auth';
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -13,7 +13,29 @@ const Register = () => {
     const [bio, setBio] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const [error, setError] = useState(null);
+    const [imageError, setImageError] = useState('');
+    const [successMsg, setSuccessMsg] = useState('');
     const navigate = useNavigate();
+
+    // this is my implementation of storing profile images in the storage. I have not added the part of adding the url of the profile image to the user data in the database
+    const imgTypes = ['image/png', 'image/PNG', 'image/jpg', 'image/jpeg']
+    const handleProfilePictureChange = (e) => {
+        const file = e.target.files[0];
+        setProfilePicture(file);
+        if(file){
+            if(file && imgTypes.includes(file.type)){
+                setProfilePicture(file);
+                setImageError('');
+            }
+            else {
+                setProfilePicture(null);
+                setImageError('Please select a valid image file type (jpg or png)')
+            }
+        }
+        else{
+            console.log('Please select your file'); // CHANGE LATER 
+        }
+    };
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -25,23 +47,20 @@ const Register = () => {
                 return;
             }
             await sendEmailVerification(auth.currentUser);
-            await userCredential.user.updateProfile({
-                displayName: name,
-            })
-            await db.collection('profiles').doc(userCredential.user.uid).set({
-                name,
-                bio,
+            // updateProfile wasn't working properly, so fixed it (was using outdated syntax)
+            updateProfile(auth.currentUser, {
+                displayName: name
             });
-            
+            setDoc(doc(db, "profiles", userCredential.user.uid), {
+                name,
+                email,
+                bio,
+                uid: userCredential.user.uid
+            });
         }
         catch (error){
             setError(error.message);
         }
-    };
-
-    const handleProfilePictureChange = (e) => {
-        const file = e.target.files[0];
-        setProfilePicture(file);
     };
 
     return (

@@ -11,6 +11,7 @@ import Register from "./Register";
 import { AuthContext } from './AuthContext';
 import PrivateRoute from "./PrivateRoute"
 import Chats from "./views/Chats";
+import { ProductInfo } from "./ProductInfo";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="profile/:userId" element={<PrivateRoute><Profile /></PrivateRoute>} />
           <Route path="addproduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
           <Route path="chat" element={<PrivateRoute><Chats /></PrivateRoute>} />
+          <Route path="productinfo/:productid" element={<ProductInfo />} />
       </Routes>
       </BrowserRouter>
     </AuthContext>
