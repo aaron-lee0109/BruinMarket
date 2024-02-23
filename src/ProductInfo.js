@@ -41,7 +41,6 @@ export const ProductInfo = () => {
         })
     }
     */
-
     const getProductData = async () => {
         const productTemp = await getDoc(doc(db, "products", params.productid));
         setProduct(productTemp.data()); 
@@ -50,6 +49,8 @@ export const ProductInfo = () => {
         getProductData()
     }, [])
 
+
+
     return ( // add a URL to the product.seller 
         <div>
             <Navbar />
@@ -57,10 +58,13 @@ export const ProductInfo = () => {
             <div className='product-img'>
                 <img src={product.url} alt='product-img' />
             </div>
-            <div>Sold by: {product.seller}</div> 
             <div className='product-name'>{product.name}</div>
-            <div className='product-name'>{product.description}</div>
-            <div className='product-price'>{product.price}</div>
+            <div className='product-seller'>
+                Sold by: <a href={`/profile/${product.sellerID}`}>{product.seller}</a>
+            </div>
+            <div className='product-description'>Product Description: {product.description}</div>
+            <div className='product-category'>Category: {product.category}</div>
+            <div className='product-price'>Price: ${product.price}</div>
             <button>Request Item</button>
         </div>
     )

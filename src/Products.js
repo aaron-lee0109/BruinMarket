@@ -11,7 +11,7 @@ export const Products = ({products}) => {
                 <img src={item.url} alt='product-img' />
             </div>
             <div className='product-name'>{item.name}</div>
-            <div className='product-price'>{item.price}</div>
+            <div className='product-price'>${item.price}</div>
         </div>
     ))
 }
