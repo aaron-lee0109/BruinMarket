@@ -1,9 +1,10 @@
 //Register.js
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth, db } from './Config';
-import { createUserWithEmailAndPassword, deleteUser, sendEmailVerification } from '@firebase/auth';
+import { auth} from './Config';
+import { createUserWithEmailAndPassword, deleteUser, sendEmailVerification, updateProfile } from '@firebase/auth';
+import { storage, db } from "./Config";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 
 const Register = () => {
@@ -13,11 +14,12 @@ const Register = () => {
     const [bio, setBio] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const [error, setError] = useState(null);
-    const navigate = useNavigate();
+    const [url, setUrl] = useState(null);
 
     const handleRegister = async (e) => {
         e.preventDefault();
         try{
+            console.log(profilePicture);
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             if (!(userCredential.user.email.endsWith("@ucla.edu") || 
                   userCredential.user.email.endsWith("@g.ucla.edu"))) {
@@ -26,9 +28,19 @@ const Register = () => {
                 return;
             }
             await sendEmailVerification(auth.currentUser);
-            await userCredential.user.updateProfile({
+            // Upload profile picture to storage
+            const imageRef = ref(storage, `profile-image/${profilePicture.name}`);
+            uploadBytes(imageRef, profilePicture).then(() => {
+                getDownloadURL(imageRef)
+                    .then((url => {
+                        setUrl(url);
+                }));
+            });
+            console.log(url);
+            updateProfile(auth.currentUser, {
                 displayName: name,
-            })
+                photoURL: url,
+            });
             await db.collection('profiles').doc(userCredential.user.uid).set({
                 name,
                 bio,
@@ -41,8 +53,9 @@ const Register = () => {
     };
 
     const handleProfilePictureChange = (e) => {
-        const file = e.target.files[0];
-        setProfilePicture(file);
+        if(e.target.files[0]) { 
+            setProfilePicture(e.target.files[0]);
+        }
     };
 
     return (
