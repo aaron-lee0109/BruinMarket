@@ -1,7 +1,7 @@
 //AddProduct.js
 
 import React, { useState } from "react";
-import { storage, db } from "./Config";
+import { storage, db, auth } from "./Config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { collection, addDoc } from "firebase/firestore";
 import { v4 } from "uuid";
@@ -18,6 +18,8 @@ export const AddProduct = () => {
     const[imageError, setImageError] = useState('');
     const[successMsg, setSuccessMsg] = useState('');
     const[uploadError, setUploadError] = useState('');
+
+    const user = auth.currentUser;
     
     const imgTypes = ['image/png', 'image/PNG', 'image/jpg', 'image/jpeg']
     const handleProductImg = (e) => {
@@ -33,7 +35,7 @@ export const AddProduct = () => {
             }
         }
         else{
-            console.log('Please select your file');
+            console.log('Please select your file'); // CHANGE LATER 
         }
     }
 
@@ -50,14 +52,16 @@ export const AddProduct = () => {
         // add the image to our storage and show the progress by bytes, if error, then set an upload error
         uploadTask.on('state_changed',snapshot=>{
             const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
-            console.log(progress);
+            console.log(progress); // do we need to show it in the console?
         },error=>setUploadError(error.message),()=>{ // after that, get the URL of the image, and then add the product into our database
             getDownloadURL(uploadTask.snapshot.ref).then(url=>{
                 addDoc(colRef, {
                     name,
                     description,
                     price: Number(price),
-                    url
+                    url,
+                    seller: user.displayName,
+                    sellerID: user.uid
                 }).then(()=>{ // if it was successful, then say it was so, and then reset the form
                     setSuccessMsg('Product added succesfully');
                     setName('');
