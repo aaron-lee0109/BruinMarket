@@ -8,8 +8,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Navbar } from './Navbar'
 
 export const ProductInfo = () => {
-
-    
     const params = useParams()
     const [product, setProduct] = useState('');
     const [user, setUser] = useState(null);
@@ -41,6 +39,7 @@ export const ProductInfo = () => {
         })
     }
     */
+
     const getProductData = async () => {
         const productTemp = await getDoc(doc(db, "products", params.productid));
         setProduct(productTemp.data()); 
@@ -49,8 +48,6 @@ export const ProductInfo = () => {
         getProductData()
     }, [])
 
-
-
     return ( // add a URL to the product.seller 
         <div>
             <Navbar />
@@ -58,6 +55,7 @@ export const ProductInfo = () => {
             <div className='product-img'>
                 <img src={product.url} alt='product-img' />
             </div>
+
             <div className='product-name'>{product.name}</div>
             <div className='product-seller'>
                 Sold by: <a href={`/profile/${product.sellerID}`}>{product.seller}</a>
