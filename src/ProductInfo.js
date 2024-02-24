@@ -8,8 +8,6 @@ import { onAuthStateChanged } from "firebase/auth";
 import { Navbar } from './Navbar'
 
 export const ProductInfo = () => {
-
-    
     const params = useParams()
     const [product, setProduct] = useState('');
     const [user, setUser] = useState(null);
@@ -57,10 +55,14 @@ export const ProductInfo = () => {
             <div className='product-img'>
                 <img src={product.url} alt='product-img' />
             </div>
-            <div>Sold by: {product.seller}</div> 
+
             <div className='product-name'>{product.name}</div>
-            <div className='product-name'>{product.description}</div>
-            <div className='product-price'>{product.price}</div>
+            <div className='product-seller'>
+                Sold by: <a href={`/profile/${product.sellerID}`}>{product.seller}</a>
+            </div>
+            <div className='product-description'>Product Description: {product.description}</div>
+            <div className='product-category'>Category: {product.category}</div>
+            <div className='product-price'>Price: ${product.price}</div>
             <button>Request Item</button>
         </div>
     )

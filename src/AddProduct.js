@@ -60,6 +60,7 @@ export const AddProduct = () => {
                     description,
                     price: Number(price),
                     url,
+                    category, // added category field for database
                     seller: user.displayName,
                     sellerID: user.uid
                 }).then(()=>{ // if it was successful, then say it was so, and then reset the form
