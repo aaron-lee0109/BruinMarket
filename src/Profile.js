@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { db } from './Config';
+import { doc, getDoc } from "firebase/firestore";
+import { db, auth } from './Config';
 import { Navbar } from './Navbar';
 
 const Profile = () => {
@@ -11,7 +12,7 @@ const Profile = () => {
     const fetchProfile = async () => {
       try {
         // Fetch user profile data from Firestore based on user ID
-        const profileDoc = await db.collection('profiles').doc(userId).get();
+        const profileDoc = await getDoc(doc(db, "profiles", userId));; // i noticed what we had before was using outdated syntax, so i updated it to the new one 
         if (profileDoc.exists) {
           setProfile(profileDoc.data());
         } else {
@@ -21,14 +22,23 @@ const Profile = () => {
         console.error('Error fetching user profile:', error.message);
       }
     };
-
+    
     fetchProfile(); // Call fetchProfile function when component mounts
   }, [userId]); // Re-run effect when userId changes
 
+  // display either "Your Profile" or "Name's Profile" depending on what profile you clicked
+  let profileTitle = "";
+  if (auth.currentUser.uid === userId) {
+    profileTitle = "Your Profile"
+  } else {
+    profileTitle = `${profile.name}'s Profile`
+  }
+
+  
   return (
     <div>
       <Navbar />
-      <h2>Profile</h2>
+      <h2>{profileTitle}</h2>
       {profile ? (
         <div>
           <p>Name: {profile.name}</p>
