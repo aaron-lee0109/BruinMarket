@@ -9,8 +9,6 @@ export const Navbar = () => {
 
   const[profileLink, setProfileLink] = useState('');
 
-  console.log("Navbar - onAuthStateChanged")
-  
   useEffect(() => {
     // there was an issue where auth.currentUser.uid was causing an error when a user is not logged in. So I added a conditional checking first if we are logged in, and then setting the profile link accordingly. If we're not logged in, i just made it so that it redirects to the login page
     onAuthStateChanged(auth, (user) => {
