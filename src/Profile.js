@@ -8,8 +8,10 @@ import { Navbar } from './Navbar';
 const Profile = () => {
   const { userId } = useParams(); // Get the user ID from the URL params
   const [profile, setProfile] = useState(null);
-
+  const [products, setProducts] = useState([]);
+  
   useEffect(() => {
+    console.log("HERE")
     const fetchProfile = async () => {
       try {
         // Fetch user profile data from Firestore based on user ID
@@ -34,11 +36,10 @@ const Profile = () => {
     profileTitle = "Your Profile"
     productTitle = "Your Products"
   } else {
-    profileTitle = `${profile.name}'s Profile`
-    productTitle = `${profile.name}'s Products`
+    profileTitle = `${profile?.name}'s Profile`
+    productTitle = `${profile?.name}'s Products`
   }
 
-  const [products, setProducts] = useState([]);
   const getProducts = async () => {
     const q = query(collection(db, "products"), where ("sellerID", "==", userId));
     const querySnapshot = await getDocs(q);

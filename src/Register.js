@@ -1,8 +1,8 @@
 //Register.js
 
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { auth, db, storage } from './Config';
+import { useNavigate } from 'react-router-dom';
+import { auth, db } from './Config';
 import { setDoc, doc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, deleteUser, sendEmailVerification, updateProfile } from 'firebase/auth';
 
@@ -11,31 +11,9 @@ const Register = () => {
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
     const [bio, setBio] = useState('');
-    const [profilePicture, setProfilePicture] = useState(null);
     const [error, setError] = useState(null);
-    const [imageError, setImageError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
     const navigate = useNavigate();
-
-    // this is my implementation of storing profile images in the storage. I have not added the part of adding the url of the profile image to the user data in the database
-    const imgTypes = ['image/png', 'image/PNG', 'image/jpg', 'image/jpeg']
-    const handleProfilePictureChange = (e) => {
-        const file = e.target.files[0];
-        setProfilePicture(file);
-        if(file){
-            if(file && imgTypes.includes(file.type)){
-                setProfilePicture(file);
-                setImageError('');
-            }
-            else {
-                setProfilePicture(null);
-                setImageError('Please select a valid image file type (jpg or png)')
-            }
-        }
-        else{
-            console.log('Please select your file'); // CHANGE LATER 
-        }
-    };
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -66,6 +44,11 @@ const Register = () => {
 
     return (
         <div>
+            <nav class="nav">
+                <a href="/" class="name">
+                    <img src="img/logo.png" class="logo" />
+                </a>
+            </nav>
             <h2>Register</h2>
             <form onSubmit={handleRegister}>
                 <div>
@@ -83,10 +66,6 @@ const Register = () => {
                 <div>
                     <label>Bio:</label>
                     <input value={bio} onChange={(e) => setBio(e.target.value)} />
-                </div>
-                <div>
-                    <label>Profile Picture:</label>
-                    <input type="file" accept="image/*" onChange={handleProfilePictureChange} />
                 </div>
                 <div>
                     <button type="submit">Register</button>

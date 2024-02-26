@@ -3,7 +3,7 @@
 import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import { auth } from "./Config";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 
 export const Navbar = () => {
 
@@ -21,6 +21,16 @@ export const Navbar = () => {
     });
   }, [])
 
+
+  const handleSignOut = (e) => {
+    e.preventDefault();
+    signOut(auth).then(() => {
+      // Sign-out successful.
+    }).catch((error) => {
+      // An error happened.
+    });
+  }
+
   return (
     <div>
       <nav class="nav">
@@ -34,6 +44,7 @@ export const Navbar = () => {
           <Link to="/authentication" className="nav-link">
             Login/Register
           </Link>
+          <button onClick={handleSignOut}>Sign Out</button>
           <Link to={profileLink} className="nav-link">
             Profile
           </Link>
