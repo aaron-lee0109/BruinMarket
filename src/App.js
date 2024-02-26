@@ -11,6 +11,7 @@ import Register from "./Register";
 import { AuthContext } from './AuthContext';
 import PrivateRoute from "./PrivateRoute"
 import { ChatContext } from "./ChatContext";
+import Search from "./Search";
 import { ProductInfo } from "./ProductInfo";
 
 const App = () => {
@@ -19,11 +20,12 @@ const App = () => {
       <ChatContext>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<PrivateRoute><Home /></PrivateRoute>} />
+            <Route path="/" element= {<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="authentication" element={<Authentication />} />
             <Route path="register" element={<Register />} />
             <Route path="profile/:userId" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="addproduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
+            <Route path="search" element={<PrivateRoute><Search /></PrivateRoute>} />
             <Route path="productinfo/:productid" element={<ProductInfo />} />
           </Routes>
         </BrowserRouter>

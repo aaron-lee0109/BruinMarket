@@ -40,6 +40,9 @@ export const Navbar = () => {
           <Link to="/addproduct" className="nav-link">
             Add Product
           </Link>
+          <Link to="/search" className="nav-link">
+            Search
+          </Link>
           <Link onClick={OpenChatWindow} className="nav-link">
             Chat
           </Link>
