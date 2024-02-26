@@ -123,7 +123,7 @@ export function ChatContext({ children }) {
     setChatOpen(true); // Open modal window
 
   }
-
+/*
   //TODO: TEMP for testing purposes
   const ChatFeed = async () => {
     if (!user?.uid) return;
@@ -171,7 +171,7 @@ export function ChatContext({ children }) {
     }
     ListChats();
   }
-
+*/
   // get list of messages by getDoc
   const ListMessage = async () => {
     if (activeChat) {
@@ -221,7 +221,7 @@ export function ChatContext({ children }) {
       .catch((error) => {
         console.error("Error creating message: ", error);
       });
-
+    /*
     //TODO: TEMP for testing purposes
     const reply = {
       chatId: activeChat.id,
@@ -243,7 +243,7 @@ export function ChatContext({ children }) {
         console.error("Error creating document:", err);
       });
     // End of fake answer
-
+    */
     await ListChats();
     await ListMessage();
   }
@@ -310,7 +310,6 @@ export function ChatContext({ children }) {
         <Modal.Header closeButton>
           <Modal.Title id="example-modal-sizes-title-lg">
             Product Chat
-            <Button onClick={ChatFeed} title={JSON.stringify(activeChat, null, '\t')}>Create fake chats</Button>
           </Modal.Title>
         </Modal.Header>
 

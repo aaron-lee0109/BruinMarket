@@ -1,33 +1,40 @@
 // ProductInfo.js
 
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { auth, db } from "./Config";
 import { doc, getDoc } from "firebase/firestore";
 import { onAuthStateChanged } from "firebase/auth";
 import { Navbar } from './Navbar'
+import { Chat } from './ChatContext'; // for chat
+import { Button } from 'react-bootstrap'; // for chat
+import { Context } from './AuthContext';
+
 
 export const ProductInfo = () => {
     const params = useParams()
     const [product, setProduct] = useState('');
-    const [user, setUser] = useState(null);
-
-    // just testing out onAuthStateChanged
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
-          // User is signed in, see docs for a list of available properties
-          // https://firebase.google.com/docs/reference/js/auth.user
-          console.log(user.displayName)
-          console.log(user.uid)
-          console.log(user.email)
-          console.log(user.emailVerified)
-          // ...
-        } else {
-          // User is signed out
-          // ...
-          console.log("nothing")
-        }
-      });
+    //const [user, setUser] = useState(null);
+    const { OpenChatWindow } = useContext(Chat); // for chat
+    const { user } = useContext(Context);
+    /*
+        // just testing out onAuthStateChanged
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+              // User is signed in, see docs for a list of available properties
+              // https://firebase.google.com/docs/reference/js/auth.user
+              console.log(user.displayName)
+              console.log(user.uid)
+              console.log(user.email)
+              console.log(user.emailVerified)
+              // ...
+            } else {
+              // User is signed out
+              // ...
+              console.log("nothing")
+            }
+          });
+    */
     /*
     const getCurrentUser() {
         useEffect (() => {
@@ -42,7 +49,7 @@ export const ProductInfo = () => {
 
     const getProductData = async () => {
         const productTemp = await getDoc(doc(db, "products", params.productid));
-        setProduct(productTemp.data()); 
+        setProduct({...productTemp.data(), id: productTemp.id});
     }
     useEffect(() => {
         getProductData()
@@ -51,7 +58,7 @@ export const ProductInfo = () => {
     return ( // add a URL to the product.seller 
         <div>
             <Navbar />
-            <br/>
+            <br />
             <div className='product-img'>
                 <img src={product.url} alt='product-img' />
             </div>
@@ -63,7 +70,8 @@ export const ProductInfo = () => {
             <div className='product-description'>Product Description: {product.description}</div>
             <div className='product-category'>Category: {product.category}</div>
             <div className='product-price'>Price: ${product.price}</div>
-            <button>Request Item</button>
+            <div className=''><Button onClick={(e) => { OpenChatWindow(product) }}>Request Item</Button></div>
+
         </div>
     )
 }
