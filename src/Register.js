@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { auth, db, storage } from './Config';
 import { setDoc, doc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, deleteUser, sendEmailVerification, updateProfile } from 'firebase/auth';
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 
 const Register = () => {
     const [email, setEmail] = useState('');
@@ -13,6 +14,7 @@ const Register = () => {
     const [bio, setBio] = useState('');
     const [profilePicture, setProfilePicture] = useState(null);
     const [error, setError] = useState(null);
+    const [url, setUrl] = useState(null);
     const [imageError, setImageError] = useState('');
     const [successMsg, setSuccessMsg] = useState('');
     const navigate = useNavigate();
@@ -40,6 +42,7 @@ const Register = () => {
     const handleRegister = async (e) => {
         e.preventDefault();
         try{
+            console.log(profilePicture);
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             if (!(userCredential.user.email.endsWith("@ucla.edu") || 
                   userCredential.user.email.endsWith("@g.ucla.edu"))) {
@@ -48,10 +51,21 @@ const Register = () => {
                 return;
             }
             await sendEmailVerification(auth.currentUser);
+
+            // Upload profile picture to storage
+            const imageRef = ref(storage, `profile-image/${profilePicture.name}`);
+            uploadBytes(imageRef, profilePicture).then(() => {
+                getDownloadURL(imageRef)
+                    .then((url => {
+                        setUrl(url);
+                }));
+            });
             // updateProfile wasn't working properly, so fixed it (was using outdated syntax)
             updateProfile(auth.currentUser, {
-                displayName: name
+                displayName: name,
+                photoURL: url,
             });
+            // Save user profile data to Firestore
             setDoc(doc(db, "profiles", userCredential.user.uid), {
                 name,
                 email,
