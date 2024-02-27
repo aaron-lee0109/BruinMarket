@@ -2,10 +2,11 @@
 
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { auth, db } from "./Config";
+import { db } from "./Config";
 import { doc, getDoc } from "firebase/firestore";
-import { onAuthStateChanged } from "firebase/auth";
+// import { onAuthStateChanged } from "firebase/auth";
 import { Navbar } from './Navbar'
+import { Link } from "react-router-dom";
 import { Chat } from './ChatContext'; // for chat
 import { Button } from 'react-bootstrap'; // for chat
 import { Context } from './AuthContext';
@@ -46,7 +47,6 @@ export const ProductInfo = () => {
         })
     }
     */
-
     const getProductData = async () => {
         const productTemp = await getDoc(doc(db, "products", params.productid));
         setProduct({...productTemp.data(), id: productTemp.id});
@@ -65,7 +65,7 @@ export const ProductInfo = () => {
 
             <div className='product-name'>{product.name}</div>
             <div className='product-seller'>
-                Sold by: <a href={`/profile/${product.sellerID}`}>{product.seller}</a>
+                Sold by: <Link to={`/profile/${product.sellerID}`}>{product.seller}</Link>
             </div>
             <div className='product-description'>Product Description: {product.description}</div>
             <div className='product-category'>Category: {product.category}</div>

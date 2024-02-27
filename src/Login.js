@@ -31,7 +31,11 @@ const Login = () => {
 
     return (
         <div>
-            <Navbar />
+            <nav class="nav">
+                <a href="/" class="name">
+                    <img src="img/logo.png" class="logo" />
+                </a>
+            </nav>
             <h2>Login</h2>
             <form onSubmit={handleLogin}>
                 <div>
@@ -48,6 +52,7 @@ const Login = () => {
             </form>
             {error && <div>{error}</div>}
             <p>Don't have an account?</p>
+            
         </div>
     );
 };
