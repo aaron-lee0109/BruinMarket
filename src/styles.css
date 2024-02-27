@@ -18,7 +18,7 @@ code {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 11vh;
+  height: 12vh;
   padding: 1vh 4vw 0.5%;
   background-color: rgb(39, 116, 174);
 }

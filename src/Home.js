@@ -26,7 +26,6 @@ export const Home = () => {
   return (
     <div>
       <Navbar />
-
       <section class="header">
         <div class="header-top">
           <h1 class="header-h1">
@@ -34,9 +33,6 @@ export const Home = () => {
           </h1>
         </div>
         <div class="homeButtons">
-          <a href="/authentication" class="left">
-            Sign Up
-          </a>
           <a href="/addproduct" class="right">
             Add Product
           </a>
@@ -45,7 +41,7 @@ export const Home = () => {
 
       {products.length > 0 && ( // if we have at least 1 product, then display those products on our homepage
         <div className="container-fluid">
-          <h1 className="text-center">Products</h1>
+          <h1 className="text-center">All Products</h1>
           <div className="products-box">
             <Products products={products} />
           </div>
