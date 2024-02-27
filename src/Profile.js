@@ -11,7 +11,6 @@ const Profile = () => {
   const [products, setProducts] = useState([]);
   
   useEffect(() => {
-    console.log("HERE")
     const fetchProfile = async () => {
       try {
         // Fetch user profile data from Firestore based on user ID

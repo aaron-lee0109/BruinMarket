@@ -13,6 +13,7 @@ import PrivateRoute from "./PrivateRoute"
 import { ChatContext } from "./ChatContext";
 import Search from "./Search";
 import { ProductInfo } from "./ProductInfo";
+import { Category } from "./Category";
 
 const App = () => {
   return (
@@ -27,6 +28,7 @@ const App = () => {
             <Route path="addproduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
             <Route path="search" element={<PrivateRoute><Search /></PrivateRoute>} />
             <Route path="productinfo/:productid" element={<PrivateRoute><ProductInfo /></PrivateRoute>} />
+            <Route path="category/:categType" element={<PrivateRoute><Category /></PrivateRoute>} />
           </Routes>
         </BrowserRouter>
       </ChatContext>
