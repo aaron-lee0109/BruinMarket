@@ -4,42 +4,56 @@ import { db } from "./Config";
 import { Products } from './Products';
 import { Navbar } from './Navbar'
 
-function Found({products, searching}) {
-    getDocs(collection(db, "products")).then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-            const data = doc.data();
-    
-            const item = data.name.toLowerCase();
-            const input = searching.toLowerCase();
-    
-            if (item.includes(input)) {
-                console.log("Found");
-                return (<Products products={products}></Products>);
-            }
-            else {
-                console.log("not Found");
-            }
-        });
-    })
-}
-
-
-export const Search = () => {
-    const [input, setInput] = useState('');
-    const [searching, setSearching] = useState('');
-    const [productList, setProductList] = useState([]);
-    const productRef = collection(db, "products");
+const Found = ({ searching }) => {
+    // create the array of products we're going to display
+    const [products, setProducts] = useState([]);
+  
+    // create a function that will retrieve all the products in our database, and store them in our array
+    const getProducts = async () => {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const productsArray = [];
+      querySnapshot.forEach((doc) => {
+        productsArray.push({ ...doc.data(), id: doc.id });
+      });
+      setProducts(productsArray);
+    };
 
     useEffect(() => {
-        const getProductData = async () => {
-            const q = query(productRef, orderBy("name"));
-            const productData = await getDocs(q);
-
-            const list = productData.docs.map(doc => {return {...doc.data(), id: doc.id}})
-            setProductList(list);
-        }
-        getProductData();
+      getProducts();
     }, []);
+
+    // function that filters the products based on search input
+    const [filteredProducts, setFilteredProducts] = useState([]);
+
+    useEffect(() => {
+        const filtered = products.filter(product =>
+            product.name && product.name.toLowerCase().includes(searching.toLowerCase())
+        );
+        setFilteredProducts(filtered);
+    }, [searching, products]);
+
+    return (
+        <div>
+          {filteredProducts.length > 0 && ( // At least one match
+            <div className="container-fluid">
+              <h1>Products</h1>
+              <div className="products-box">
+                <Products products={filteredProducts} />
+              </div>
+            </div>
+          )}
+          {filteredProducts.length < 1 && ( // no matches
+            <div className="container-fluid">
+                <h1>No matches...</h1>
+            </div>
+          )}
+        </div>
+    );
+};  
+
+const Search = () => {
+    const [input, setInput] = useState('');
+    const [searching, setSearching] = useState('');
 
     return (
     <div>
@@ -50,14 +64,10 @@ export const Search = () => {
             <button onClick={() => {setSearching(input)}}>Search</button>
         </div>
         <div>
-            <view>
-                {productList.map(item => {
-                    return (<Found products={item.products} searching={searching}></Found>)
-                })}
-            </view>
+            {searching && <Found searching={searching} />}
         </div>
     </div>
-    )
-}
+    );
+};
 
 export default Search;
