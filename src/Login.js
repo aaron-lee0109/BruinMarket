@@ -1,7 +1,7 @@
 //Login.js
 import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth'; // Import signInWithEmailAndPassword from firebase/auth
+import { useNavigate } from 'react-router-dom';
+import { signInWithEmailAndPassword} from 'firebase/auth'; // Import signInWithEmailAndPassword from firebase/auth
 import { auth } from './Config';
 import { Navbar } from './Navbar';
 
