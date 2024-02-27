@@ -26,7 +26,7 @@ const App = () => {
             <Route path="profile/:userId" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="addproduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
             <Route path="search" element={<PrivateRoute><Search /></PrivateRoute>} />
-            <Route path="productinfo/:productid" element={<ProductInfo />} />
+            <Route path="productinfo/:productid" element={<PrivateRoute><ProductInfo /></PrivateRoute>} />
           </Routes>
         </BrowserRouter>
       </ChatContext>
