@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { Chat } from './ChatContext'; // for chat
 import { Button } from 'react-bootstrap'; // for chat
 import { Context } from './AuthContext';
-
+import { ProductReport } from './ProductReport';
 
 export const ProductInfo = () => {
     const params = useParams()
@@ -41,6 +41,7 @@ export const ProductInfo = () => {
             <div className='product-category'>Category: {product.category}</div>
             <div className='product-price'>Price: ${product.price}</div>
             <div className=''><Button onClick={(e) => { OpenChatWindow(product) }}>Chat With {product.seller}</Button></div>
+            <div className='float-end'><ProductReport product={product}/></div>
         </div>
     )
 }

@@ -27,12 +27,12 @@ Add button on product item - DONE
 
 Security rules for FireStore:
 read/write chats: sellerId == auth.user.uid || buyerId == auth.user.uid
-  - indexes for filtering and sortning multi fields?
+  - indices for filtering and sortning multi fields?
 */
 
 // Collection Refs
 const chatCollectionRef = collection(db, 'chats');
-// Based on recommendation
+
 // https://firebase.google.com/docs/database/web/structure-data#flatten_data_structures
 const messageCollectionRef = (chatId) => collection(db, 'chats-messages', chatId, 'messages')
 const productCollectionRef = collection(db, 'products');
@@ -47,6 +47,7 @@ export function ChatContext({ children }) {
   const [chatOpen, setChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [unreadChats, setUnreadChats] = useState(0);
+  const [allowAutoRefresh, setAllowAutoRefresh] = useState(false);
 
   const windowMessage = useRef();
   const windowMessageFooter = useRef();
@@ -56,18 +57,18 @@ export function ChatContext({ children }) {
   const ListChats = async () => {
     const qBuyer = query(chatCollectionRef,
       where('buyerId', "==", user.uid.toString()),
-      //limit(100),
+      //limit(100), // need indices for sorting and filtering
     );
     const resultBuyer = await getDocs(qBuyer);
     const resultBuyerData = resultBuyer.docs.map(d => ({ ...d.data(), id: d.id }));
 
     const qSeller = query(chatCollectionRef,
       where('sellerId', "==", user.uid),
-      //limit(100),
+      //limit(100), // need indices for sorting and filtering
     );
     const resultSeller = await getDocs(qSeller);
     let resultSellerData = resultSeller.docs.map(d => ({ ...d.data(), id: d.id }));
-    resultSellerData = resultSellerData.filter(d => (d.lastMessageAt > 0)); // buyer created chat but hasn't sent yet
+    resultSellerData = resultSellerData.filter(d => (d.lastMessageAt > 0)); // buyer creates chat but hasn't sent yet
     let resultChats = [...resultBuyerData, ...resultSellerData];
     resultChats.sort((a, b) => b.lastMessage - a.lastMessage);
     setChats(resultChats);
@@ -123,55 +124,7 @@ export function ChatContext({ children }) {
     setChatOpen(true); // Open modal window
 
   }
-/*
-  //TODO: TEMP for testing purposes
-  const ChatFeed = async () => {
-    if (!user?.uid) return;
 
-    for (let i = 0; i < 10; i++) {
-      await addDoc(chatCollectionRef, {
-        productId: faker.string.alpha(24),
-        productName: faker.commerce.product(),
-        productPhoto: faker.image.url(),
-        buyerId: user.uid,
-        buyerName: user.name || user.displayName || '',
-        buyerPhoto: user.photo || user.photoURL || '',
-        sellerId: faker.string.alpha(24),
-        sellerName: faker.person.fullName(),
-        sellerPhoto: faker.image.avatar(),
-        lastMessageAt: 0,
-        lastBuyerSeenAt: 0,
-        lastSellerSeenAt: 0,
-        createdAt: Date.now(),
-      })
-        .then(() => { })
-        .catch((err) => {
-          console.error("Error creating product:", err);
-        });
-
-      await addDoc(chatCollectionRef, {
-        productId: faker.string.alpha(24),
-        productName: faker.commerce.product(),
-        productPhoto: faker.image.business(),
-        sellerId: user.uid,
-        sellerName: user.name || user.displayName || '',
-        sellerPhoto: user.photo || user.photoURL || '',
-        buyerId: faker.string.alpha(24),
-        buyerName: faker.person.firstName(),
-        buyerPhoto: faker.image.avatar(),
-        lastMessageAt: 0,
-        lastBuyerSeenAt: 0,
-        lastSellerSeenAt: 0,
-        createdAt: Date.now(),
-      })
-        .then(() => { })
-        .catch((err) => {
-          console.error("Error creating product:", err);
-        })
-    }
-    ListChats();
-  }
-*/
   // get list of messages by getDoc
   const ListMessage = async () => {
     if (activeChat) {
@@ -187,6 +140,32 @@ export function ChatContext({ children }) {
         ? resultMessagesData[resultMessagesData.length - 1].createdAt
         : 0;
       updateLastSeen(lastMessageAt);
+      scrollDownMessages();
+    } else {
+      setMessages(null);
+    }
+  }
+
+  // refresh list of messages
+  const RefreshMessages = async () => {
+    if (chatOpen && activeChat) {
+      const qMessages = query(
+        messageCollectionRef(activeChat.id),
+        limit(100)
+      );
+      const previousMessageCount = messages?.length;
+      const resultMessages = await getDocs(qMessages);
+      let resultMessagesData = resultMessages.docs.map(d => ({ ...d.data(), id: d.id }));
+      resultMessagesData.sort((a, b) => a.createdAt - b.createdAt);
+      const currentMessageCount = resultMessagesData?.length;
+      setMessages(resultMessagesData);
+      const lastMessageAt = resultMessagesData?.length > 0
+        ? resultMessagesData[resultMessagesData.length - 1].createdAt
+        : 0;
+      updateLastSeen(lastMessageAt);
+      if (currentMessageCount !== previousMessageCount) {
+        scrollDownMessages();
+      }
     } else {
       setMessages(null);
     }
@@ -200,7 +179,7 @@ export function ChatContext({ children }) {
 
     const message = {
       chatId: activeChat.id,
-      text: formMessage.current.value,
+      text: formMessage.current.value.trim(),
       createdAt: Date.now(),
       authorId: user?.uid || 'anon',
       authorPhoto: user.photo || user.photoURL || '',
@@ -214,38 +193,23 @@ export function ChatContext({ children }) {
         formMessage.current.focus();
         (async () => {
           const chatDocRef = doc(chatCollectionRef, activeChat.id);
-          await updateDoc(chatDocRef, { lastMessage: Date.now() });
-          //await ListChats(); //return when there is no more fake
+          await updateDoc(chatDocRef, { lastMessageAt: Date.now() });
         })();
       })
       .catch((error) => {
         console.error("Error creating message: ", error);
       });
-    /*
-    //TODO: TEMP for testing purposes
-    const reply = {
-      chatId: activeChat.id,
-      text: faker.commerce.productDescription(),
-      createdAt: Date.now(),
-      authorId: activeChat.sellerId === user.uid ? activeChat.buyerId : activeChat.sellerId,
-      authorName: activeChat.sellerId === user.uid ? activeChat.buyerName : activeChat.sellerName,
-      authorPhoto: activeChat.sellerId === user.uid ? activeChat.buyerPhoto : activeChat.sellerPhoto,
-      media: [],
-    }
-    await addDoc(messageCollectionRef(activeChat.id), reply)
-      .then(() => {
-        (async () => {
-          const chatDocRef = doc(chatCollectionRef, activeChat.id);
-          await updateDoc(chatDocRef, { lastMessageAt: reply.createdAt });
-        })();
-      })
-      .catch((err) => {
-        console.error("Error creating document:", err);
-      });
-    // End of fake answer
-    */
+
     await ListChats();
     await ListMessage();
+  }
+
+  // scroll to element
+  // https://developer.mozilla.org/en-US/docs/Web/API/Element/scrollIntoView
+  const scrollDownMessages = () => {
+    setTimeout(() => {
+      windowMessageFooter?.current?.scrollIntoView();
+    }, 300)
   }
 
   const updateLastSeen = async (lastMessageAt) => {
@@ -300,6 +264,18 @@ export function ChatContext({ children }) {
       (async () => { await ListMessage() })()
     }
   }, [chatOpen, activeChat]);
+
+  // reload messages for active chat
+  useEffect(() => {
+    const reloadTimer = setInterval(
+      () => {
+        if (chatOpen && activeChat && allowAutoRefresh) {
+          (async () => { await RefreshMessages() })()
+        }
+      }, 10000
+    );
+    return () => clearInterval(reloadTimer);
+  }, [chatOpen, activeChat, allowAutoRefresh]);
 
   // output list of messages
   return (
@@ -406,7 +382,8 @@ export function ChatContext({ children }) {
                           <Form.Control ref={formMessage} type="text" placeholder="message text" />
                         </Col>
                         <Col xs='auto' className='ps-0'>
-                          <Button variant="outline-secondary" type='submit' onClick={SendMessage}><i className="fa-regular fa-paper-plane" />Send</Button>
+                          <Button variant="outline-secondary" type='submit' onClick={SendMessage}>Send</Button>
+                          <Button className='ms-1' variant="secondary" onClick={RefreshMessages}>Reload</Button>
                         </Col>
                       </Row>
                     </Form>
