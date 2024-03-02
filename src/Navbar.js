@@ -71,13 +71,22 @@ export const Navbar = () => {
           <a href="/" className="name">
             <img src="img/logo.png" className="logo" />
           </a>
+            
           <ul className="nav-items">
             {navItems.map((item) => {
+            if (item.title === "Home") {
+                  return (
+                    <li key={item.id} className={item.cName}>
+                    <Link to={item.path}>{item.title}</Link>
+                </li>
+                  );
+              }
               if (item.title === "Categories") {
                 return (
-                  <li
+                  <li 
                     key={item.id}
                     className={item.cName}
+                    class="dropdown"
                     onMouseEnter={() => setDropdown(true)}
                     onMouseLeave={() => setDropdown(false)}
                   >
@@ -87,7 +96,7 @@ export const Navbar = () => {
                 );
               }
               return (
-                <li key={item.id} className={item.cName}>
+                <li key={item.id} className={item.cName} class="dropdown">
                   <Link to={item.path}>{item.title}</Link>
                 </li>
               );
