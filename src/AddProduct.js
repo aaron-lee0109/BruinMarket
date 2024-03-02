@@ -42,7 +42,9 @@ export const AddProduct = () => {
     const handleAddProduct = (e) => {
         //prevent refreshing the page 
         e.preventDefault();
-
+        if(image == null) {
+            return;
+        }
         // we store the image name in our firebase storage in folder product images (for ease we put that task in a function)
         const storageRef = ref(storage, `product-images/${image.name + v4()}`);
         const uploadTask = uploadBytesResumable(storageRef, image);

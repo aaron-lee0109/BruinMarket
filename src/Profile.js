@@ -66,7 +66,7 @@ const Profile = () => {
   };
   useEffect(() => {
     getProducts();
-  }, []);
+  }, [userId]);
 
   return (
     <div>
