@@ -33,6 +33,7 @@ export const Home = () => {
           </h1>
         </div>
         <div class="homeButtons">
+          <a href="/search" class="left">Find Product</a> 
           <a href="/addproduct" class="right">
             Add Product
           </a>
@@ -41,7 +42,7 @@ export const Home = () => {
 
       {products.length > 0 && ( // if we have at least 1 product, then display those products on our homepage
         <div className="container-fluid">
-          <h1 className="text-center">All Products</h1>
+          <h1 className="text-center all-products">All Products</h1>
           <div className="products-box">
             <Products products={products} />
           </div>

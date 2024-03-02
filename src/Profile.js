@@ -5,12 +5,27 @@ import { db, auth } from './Config';
 import { Products } from "./Products";
 import { Navbar } from './Navbar';
 import { ProfileReport } from './ProfileReport';
+import { setDocProfile, docProfile } from "firebase/firestore";
+import { updateProfile } from 'firebase/auth';
 
 const Profile = () => {
   const { userId } = useParams(); // Get the user ID from the URL params
   const [profile, setProfile] = useState(null);
   const [products, setProducts] = useState([]);
+  const [showModal, setShowModal] = useState(false);
   
+    //These functions do not work yet
+    function updateBio() {
+        updateProfile(auth.currentUser, {
+            displayName: "test",
+        });
+    }
+    function updateName() {
+        updateProfile(auth.currentUser, {
+            displayName: "test",
+        });
+    }
+    
   useEffect(() => {
     const fetchProfile = async () => {
       try {
@@ -61,9 +76,12 @@ const Profile = () => {
         {profile ? (
           <div>
             <p>Name: {profile.name}</p>
-            <p>Bio: {profile.bio}</p>
+            <p>Bio: {profile.bio ? profile.bio : "User has no bio :("}</p>
             {/* Additional profile information can be displayed here */}
-          </div>
+    <button onClick={updateName}>Update Name</button>
+ <input type="text" name="popup" id="popup" class="hide"></input> <br/>
+    <button onClick={updateBio}>Update Bio</button>
+    <input type="text" name="popup" id="popup" class="hide"></input>          </div>
         ) : (
           <p>Loading profile...</p>
         )}
