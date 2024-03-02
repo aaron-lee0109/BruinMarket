@@ -4,6 +4,7 @@ import { doc, getDoc, getDocs, where, collection, query } from "firebase/firesto
 import { db, auth } from './Config';
 import { Products } from "./Products";
 import { Navbar } from './Navbar';
+import { ProfileReport } from './ProfileReport';
 import { setDocProfile, docProfile } from "firebase/firestore";
 import { updateProfile } from 'firebase/auth';
 
@@ -98,6 +99,7 @@ const Profile = () => {
           <div className="container-fluid">Please wait...</div>
         )}
       </section>
+      <div className='float-end'><ProfileReport profile={profile}/></div>
     </div>
   );
 };
