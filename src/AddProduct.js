@@ -45,8 +45,9 @@ export const AddProduct = () => {
         if(image == null) {
             return;
         }
+        const imgPath = image.name + v4()
         // we store the image name in our firebase storage in folder product images (for ease we put that task in a function)
-        const storageRef = ref(storage, `product-images/${image.name + v4()}`);
+        const storageRef = ref(storage, `product-images/${imgPath}`);
         const uploadTask = uploadBytesResumable(storageRef, image);
         // store the product itself in our firestore database
         const colRef = collection(db, 'products');
@@ -54,14 +55,14 @@ export const AddProduct = () => {
         // add the image to our storage and show the progress by bytes, if error, then set an upload error
         uploadTask.on('state_changed',snapshot=>{
             const progress = (snapshot.bytesTransferred/snapshot.totalBytes)*100
-            console.log(progress); // do we need to show it in the console?
         },error=>setUploadError(error.message),()=>{ // after that, get the URL of the image, and then add the product into our database
             getDownloadURL(uploadTask.snapshot.ref).then(url=>{
                 addDoc(colRef, {
                     name,
                     description,
                     price: Number(price),
-                    url,
+                    imgPath,
+                    url, 
                     category, // added category field for database
                     seller: user.displayName,
                     sellerID: user.uid

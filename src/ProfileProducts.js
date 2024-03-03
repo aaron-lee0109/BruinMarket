@@ -1,7 +1,8 @@
 // ProfileProducts.js
-import React, { useEffect } from 'react';
-import { auth, db } from './Config'
-import { collection, deleteDoc, doc } from "firebase/firestore";
+import React from 'react';
+import { auth, db, storage } from './Config'
+import { ref, deleteObject } from 'firebase/storage'
+import { collection, deleteDoc, doc, query, where, getDocs } from "firebase/firestore";
 
 /*
 export const ProfileProducts = ({products}) => {
@@ -21,12 +22,23 @@ export const ProfileProducts = ({products}) => {
 
 function ProfileProducts({ products, UID }){
 
-    const delProduct = (id) => {
+    const delProduct = async (id, imgPath) => {
         const docRef = doc(db, 'products', id);
-        console.log(docRef)
+        const chatRef = query(collection(db, "chats"), where ("productId", "==", id))
+        const imgRef = ref(storage, `product-images/${imgPath}`)
+
+        deleteObject(imgRef)
+
+        const querySnapshot = await getDocs(chatRef);
+            querySnapshot.forEach((docu) => {
+            const chat = doc(db, 'chats', docu.id)
+            deleteDoc(chat)
+        })
+
         deleteDoc(docRef).then(() => {
             window.location.reload();
         })
+
     };
 
     if(auth.currentUser.uid === UID){
@@ -39,7 +51,7 @@ function ProfileProducts({ products, UID }){
                     <div className='product-name'>{item.name}</div>
                     <div className='product-price'>${item.price}</div>  
                 </div>
-                <button className='delete-product' onClick={(e) => delProduct(item.id)}>Delete Item</button>
+                <button className='delete-product' onClick={(e) => delProduct(item.id, item.imgPath)}>Delete Item</button>
             </div>
         ))
     } else{
