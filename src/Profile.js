@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { doc, getDoc, getDocs, where, collection, query } from "firebase/firestore";
 import { db, auth } from './Config';
 import { Products } from "./Products";
+import ProfileProducts from "./ProfileProducts";
 import { Navbar } from './Navbar';
 import { ProfileReport } from './ProfileReport';
 import { setDocProfile, docProfile } from "firebase/firestore";
@@ -91,12 +92,12 @@ const Profile = () => {
           <div className="container-fluid">
             <h2>{productTitle}</h2>
             <div className="products-box">
-              <Products products={products} />
+              <ProfileProducts products={products} UID={userId}></ProfileProducts>
             </div>
           </div>
         )}
-        {products.length < 1 && ( // if we don't have any or loading, then display "please wait"
-          <div className="container-fluid">Please wait...</div>
+        {products.length < 1 && ( // if we don't have any or loading, then display "No products yet!"
+          <div className="container-fluid">No products yet!</div>
         )}
       </section>
       <div className='float-end'><ProfileReport profile={profile}/></div>
