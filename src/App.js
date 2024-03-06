@@ -8,6 +8,8 @@ import Profile from "./Profile";
 import { AddProduct } from "./AddProduct";
 import Authentication from "./Authentication";
 import Register from "./Register";
+import Login from "./Login";
+import ForgotPassword from "./ForgotPassword";
 import { AuthContext } from './AuthContext';
 import PrivateRoute from "./PrivateRoute"
 import { ChatContext } from "./ChatContext";
@@ -24,6 +26,8 @@ const App = () => {
             <Route path="/" element= {<PrivateRoute><Home /></PrivateRoute>} />
             <Route path="authentication" element={<Authentication />} />
             <Route path="register" element={<Register />} />
+            <Route path="login" element={<Login />} />
+            <Route path="resetpassword" element={<ForgotPassword />} />
             <Route path="profile/:userId" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="addproduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
             <Route path="search" element={<PrivateRoute><Search /></PrivateRoute>} />

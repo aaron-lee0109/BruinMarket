@@ -1,7 +1,7 @@
 //Register.js
 
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { auth, db } from './Config';
 import { setDoc, doc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, deleteUser, sendEmailVerification, updateProfile } from 'firebase/auth';
@@ -14,6 +14,7 @@ const Register = () => {
     const [error, setError] = useState(null);
     const [successMsg, setSuccessMsg] = useState('');
     const navigate = useNavigate();
+    const [isLogin, setIsLogin] = useState(true);
 
     const handleRegister = async (e) => {
         e.preventDefault();
@@ -38,6 +39,8 @@ const Register = () => {
                 bio,
                 uid: userCredential.user.uid
             });
+            alert("Account sucessfully created! Please verify email before signing in.");
+            navigate("/login");
         }
         catch (error){
             setError(error.message);
@@ -55,25 +58,26 @@ const Register = () => {
             <form onSubmit={handleRegister}>
                 <div>
                     <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <input type="email" placeholder="Enter your UCLA email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div>
                     <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <div>    
                     <label>Name:</label>
-                    <input type="text" value={name} onChange={(e) => setName(e.target.value)} required />
+                    <input type="text" placeholder="Enter your name" value={name} onChange={(e) => setName(e.target.value)} required />
                 </div>
                 <div>
                     <label>Bio:</label>
-                    <input value={bio} onChange={(e) => setBio(e.target.value)} />
+                    <input value={bio} placeholder="Tell us about yourself" onChange={(e) => setBio(e.target.value)} />
                 </div>
                 <div>
                     <button type="submit">Register</button>
                 </div>
             </form>
             {error && <div>{error}</div>}
+            <p>Already have an? <Link to="/login">Login</Link></p>
         </div>
     );
 };
