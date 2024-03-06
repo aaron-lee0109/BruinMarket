@@ -3,19 +3,19 @@
 import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./styles.css";
-import { Home } from "./Home";
-import Profile from "./Profile";
-import { AddProduct } from "./AddProduct";
-import Authentication from "./Authentication";
-import Register from "./Register";
-import Login from "./Login";
-import ForgotPassword from "./ForgotPassword";
-import { AuthContext } from './AuthContext';
-import PrivateRoute from "./PrivateRoute"
-import { ChatContext } from "./ChatContext";
-import Search from "./Search";
-import { ProductInfo } from "./ProductInfo";
-import { Category } from "./Category";
+import { Home } from "./pages/Home";
+import Profile from "./pages/Profile";
+import { AddProduct } from "./pages/AddProduct";
+import Authentication from "./authentication/Authentication";
+import Register from "./pages/Register";
+import Login from "./pages/Login";
+import ForgotPassword from "./pages/ForgotPassword";
+import { AuthContext } from './authentication/AuthContext';
+import PrivateRoute from "./authentication/PrivateRoute"
+import { ChatContext } from "./chat/ChatContext";
+import Search from "./pages/Search";
+import { ProductInfo } from "./pages/ProductInfo";
+import { Category } from "./pages/Category";
 
 const App = () => {
   return (
