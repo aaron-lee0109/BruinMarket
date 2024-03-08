@@ -6,10 +6,10 @@ import "./styles.css";
 import { Home } from "./pages/Home";
 import Profile from "./pages/Profile";
 import { AddProduct } from "./pages/AddProduct";
-import Authentication from "./authentication/Authentication";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import ForgotPassword from "./pages/ForgotPassword";
+import Verify from "./pages/Verify";
 import { AuthContext } from './authentication/AuthContext';
 import PrivateRoute from "./authentication/PrivateRoute"
 import { ChatContext } from "./chat/ChatContext";
@@ -24,10 +24,10 @@ const App = () => {
         <BrowserRouter>
           <Routes>
             <Route path="/" element= {<PrivateRoute><Home /></PrivateRoute>} />
-            <Route path="authentication" element={<Authentication />} />
             <Route path="register" element={<Register />} />
             <Route path="login" element={<Login />} />
             <Route path="resetpassword" element={<ForgotPassword />} />
+            <Route path="verifyemail" element={<Verify />} />
             <Route path="profile/:userId" element={<PrivateRoute><Profile /></PrivateRoute>} />
             <Route path="addproduct" element={<PrivateRoute><AddProduct /></PrivateRoute>} />
             <Route path="search" element={<PrivateRoute><Search /></PrivateRoute>} />

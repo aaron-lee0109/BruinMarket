@@ -15,6 +15,7 @@ const Login = () => {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password).then(authUser => {
+                console.log(authUser.user.emailVerified);
                 if(!authUser.user.emailVerified) { 
                     alert("Please verify email before signing in!");
                     auth.signOut();
@@ -42,6 +43,7 @@ const Login = () => {
                     <label>Email:</label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
+                <p><Link to="/verifyemail">Verify email</Link></p>
                 <div>
                     <label>Password:</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
