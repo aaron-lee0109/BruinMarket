@@ -32,8 +32,8 @@ const ForgotPassword = () => {
                     <img src="img/logo.png" class="logo" />
                 </a>
             </nav>
-            <h2>Send Email Verification Link</h2>
-            <p>Verfiication link expired? Enter your UCLA Email and we'll send you a new link to verify your email</p>
+            <h2>Resend Verification Link</h2>
+            <p>Verification link expired? Enter your UCLA email and password, and we'll send you a new link to verify your email</p>
             <form onSubmit={resendVerification}>
                 <div>
                     <label>Email:</label>

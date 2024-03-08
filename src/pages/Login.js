@@ -43,7 +43,7 @@ const Login = () => {
                     <label>Email:</label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
-                <p><Link to="/verifyemail">Verify email</Link></p>
+                <p><Link to="/verifyemail">Verification link expired?</Link></p>
                 <div>
                     <label>Password:</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
