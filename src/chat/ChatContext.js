@@ -54,7 +54,7 @@ export function ChatContext({ children }) {
     let resultSellerData = resultSeller.docs.map(d => ({ ...d.data(), id: d.id }));
     resultSellerData = resultSellerData.filter(d => (d.lastMessageAt > 0)); // buyer creates chat but hasn't sent yet
     let resultChats = [...resultBuyerData, ...resultSellerData];
-    resultChats.sort((a, b) => b.lastMessage - a.lastMessage);
+    resultChats.sort((a, b) => b.lastMessageAt - a.lastMessageAt);
     setChats(resultChats);
   }
 
@@ -307,7 +307,7 @@ export function ChatContext({ children }) {
                                   ? <i>{c.sellerName}</i>
                                   : <i>{c.buyerName}</i>
                               },</Col>
-                              <Col><i><TimeAgo date={c.lastMessage} minPeriod='30'></TimeAgo></i></Col>
+                              <Col><i><TimeAgo date={c.lastMessageAt} minPeriod='30'></TimeAgo></i></Col>
                             </Row>
                           </Col>
 
