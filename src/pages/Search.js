@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { collection, query, getDocs, doc, orderBy} from "firebase/firestore"
+import { collection, getDocs} from "firebase/firestore"
 import { db } from "../authentication/Config";
 import { Products } from '../components/Products';
 import { Navbar } from '../components/Navbar'

@@ -11,7 +11,6 @@ const Profile = () => {
     const { userId } = useParams();
     const [profile, setProfile] = useState(null);
     const [products, setProducts] = useState([]);
-    const [showModal, setShowModal] = useState(false);
     const [newName, setNewName] = useState('');
     const [newBio, setNewBio] = useState('');
 

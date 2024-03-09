@@ -12,9 +12,7 @@ const Register = () => {
     const [name, setName] = useState('');
     const [bio, setBio] = useState('');
     const [error, setError] = useState(null);
-    const [successMsg, setSuccessMsg] = useState('');
     const navigate = useNavigate();
-    const [isLogin, setIsLogin] = useState(true);
 
     const handleRegister = async (e) => {
         e.preventDefault();

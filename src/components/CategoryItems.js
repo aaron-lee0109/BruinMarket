@@ -1,33 +1,10 @@
 export const navItems = [
-    
-//    {
-//        id: 1,
-//        title: "Home",
-//        path: "/",
-//        cName: "nav-item",
-//    },
-
-//    {
-//        id: 2,
-//        title: "Add product",
-//        path: "/addproduct",
-//        cName: "nav-item",
-//    },
-
     {
         id: 3,
         title: "Categories",
         path: "/",
         cName: "nav-item",
     },
-
-//    {
-//        id: 4,
-//        title: "Search",
-//        path: "/search",
-//        cName: "nav-item",
-//    },
-
 ];
 
 export const CategoryItems = [

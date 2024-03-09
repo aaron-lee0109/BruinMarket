@@ -16,7 +16,6 @@ export const ProductInfo = () => {
     const params = useParams()
     const [product, setProduct] = useState('');
     const { OpenChatWindow } = useContext(Chat); // for chat
-    const { user } = useContext(Context);
 
     const getProductData = async () => {
         const productTemp = await getDoc(doc(db, "products", params.productid));
