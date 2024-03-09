@@ -366,8 +366,8 @@ export function ChatContext({ children }) {
                           <Form.Control ref={formMessage} type="text" placeholder="message text" />
                         </Col>
                         <Col xs='auto' className='ps-0'>
-                          <Button variant="outline-secondary" type='submit' onClick={SendMessage}>Send</Button>
-                          <Button className='ms-1' variant="secondary" onClick={RefreshMessages}>Reload</Button>
+                          <Button variant="primary" type='submit' onClick={SendMessage}>Send</Button>
+                          <Button className='ms-1' variant="outline-secondary" onClick={RefreshMessages}>Reload</Button>
                         </Col>
                       </Row>
                     </Form>
