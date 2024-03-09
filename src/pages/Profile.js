@@ -78,6 +78,7 @@ const Profile = () => {
           <div>
             <p>Name: {profile.name}</p>
             <p>Bio: {profile.bio ? profile.bio : "User has no bio :("}</p>
+            <div className='mb-2 mt-2'><ProfileReport profile={profile}/></div>
             {/* Additional profile information can be displayed here */}
     <button onClick={updateName}>Update Name</button>
  <input type="text" name="popup" id="popup" class="hide"></input> <br/>
@@ -100,7 +101,6 @@ const Profile = () => {
           <div className="container-fluid">No products yet!</div>
         )}
       </section>
-      <div className='float-end'><ProfileReport profile={profile}/></div>
     </div>
   );
 };

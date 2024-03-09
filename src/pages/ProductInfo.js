@@ -41,7 +41,7 @@ export const ProductInfo = () => {
             <div className='product-category'>Category: {product.category}</div>
             <div className='product-price'>Price: ${product.price}</div>
             <div className=''><Button onClick={(e) => { OpenChatWindow(product) }}>Chat With {product.seller}</Button></div>
-            <div className='float-end'><ProductReport product={product}/></div>
+            <div className='mt-2'><ProductReport product={product}/></div>
         </div>
     )
 }

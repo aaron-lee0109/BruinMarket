@@ -1,9 +1,9 @@
 // ProductReport.js
 
 import { db } from '../authentication/Config';
-import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc, query, where, orderBy, limit } from '@firebase/firestore';
+import { collection, doc, getDoc, setDoc } from '@firebase/firestore';
 import { Context } from '../authentication/AuthContext';
-import { useContext, useState, useEffect, useRef} from 'react';
+import { useContext, useState, useRef } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -67,7 +67,8 @@ export function ProductReport({product}) {
 
   return (
     <>
-      <Button variant="outline-secondary" onClick={openReport}>Report item</Button>
+      {user?.uid !== product?.sellerID &&
+        <Button variant="secondary" onClick={openReport}>Report item</Button>}
 
       <Modal show={show} onHide={closeReport}>
         <Modal.Header closeButton>

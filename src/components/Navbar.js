@@ -69,7 +69,7 @@ export const Navbar = () => {
     <>
       <nav className="nav">
           <a href="/" className="name">
-            <img src="img/logo.png" className="logo" />
+            <img src="../img/logo.png" className="logo" />
           </a>
             
           <ul className="nav-items">
