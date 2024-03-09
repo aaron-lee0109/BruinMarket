@@ -51,6 +51,7 @@ export const AddProduct = () => {
         const uploadTask = uploadBytesResumable(storageRef, image);
         // store the product itself in our firestore database
         const colRef = collection(db, 'products');
+        const formattedPrice = Intl.NumberFormat("en-US",{ maximumFractionDigits: 2}).format(price.toLocaleString()); 
 
         // add the image to our storage and show the progress by bytes, if error, then set an upload error
         uploadTask.on('state_changed',snapshot=>{
@@ -60,7 +61,7 @@ export const AddProduct = () => {
                 addDoc(colRef, {
                     name,
                     description,
-                    price: Number(price),
+                    price: formattedPrice,
                     imgPath,
                     url, 
                     category, // added category field for database
