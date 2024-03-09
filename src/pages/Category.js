@@ -4,7 +4,6 @@ import { db } from "../authentication/Config";
 import { getDocs, where, collection, query } from "firebase/firestore";
 import { Products } from "../components/Products";
 import { Navbar } from '../components/Navbar'
-import { Link } from "react-router-dom";
 
 export const Category = () => {
 

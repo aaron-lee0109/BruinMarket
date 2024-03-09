@@ -4,22 +4,6 @@ import { auth, db, storage } from '../authentication/Config'
 import { ref, deleteObject } from 'firebase/storage'
 import { collection, deleteDoc, doc, query, where, getDocs } from "firebase/firestore";
 
-/*
-export const ProfileProducts = ({products}) => {
-    // using the products array we were passed, map those products one by one and display their image, name and price
-    return products.map(item =>(
-        <div key = {item.id} className='product' onClick={() => window.location.href = `/productinfo/${item.id}`}>
-            <div className='product-img'>
-                <img src={item.url} alt='product-img' />
-            </div>
-            <div className='product-name'>{item.name}</div>
-            <div className='product-price'>${item.price}</div>
-        </div>
-    ))
-}
-*/
-
-
 function ProfileProducts({ products, UID }){
 
     const delProduct = async (id, imgPath) => {

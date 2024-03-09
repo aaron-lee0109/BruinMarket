@@ -36,36 +36,6 @@ export const Navbar = () => {
   }
 
   return (
-    /*
-    <div>
-      <nav class="nav">
-        <a href="/" class="name">
-          <img src="img/logo.png" class="logo" />
-        </a>
-        <div class="links">
-          <Link to="/" className="nav-link">
-            Home
-          </Link>
-          <Link to="/authentication" className="nav-link">
-            Login/Register
-          </Link>
-          <button onClick={handleSignOut}>Sign Out</button>
-          <Link to={profileLink} className="nav-link">
-            Profile
-          </Link>
-          <Link to="/addproduct" className="nav-link">
-            Add Product
-          </Link>
-          <Link to="/search" className="nav-link">
-            Search
-          </Link>
-          <Link onClick={OpenChatWindow} className="nav-link">
-            Chat
-          </Link>
-        </div>
-      </nav>
-    </div>
-    */
     <>
       <nav className="nav">
           <a href="/" className="name">
