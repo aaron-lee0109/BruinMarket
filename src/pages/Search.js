@@ -54,13 +54,25 @@ const Found = ({ searching }) => {
 const Search = () => {
     const [input, setInput] = useState('');
     const [searching, setSearching] = useState('');
+    
+    const handleKeyDown = (e) => {
+      if(e.key === 'Enter'){
+        setSearching(input);
+      }
+    }
 
     return (
     <div>
         <Navbar />
         <h2 class="header2">Search</h2>
         <div class="form">
-            <input placeholder="Type to search..." type="text" className="searchBar" onChange={(e) => setInput(e.target.value)}/>
+            <input 
+              placeholder="Type to search..." 
+              type="text" 
+              className="searchBar" 
+              onChange={(e) => setInput(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
             <button onClick={() => {setSearching(input)}}>Search</button>
         </div>
         <div>
