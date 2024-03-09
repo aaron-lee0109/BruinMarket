@@ -101,26 +101,29 @@ const Profile = () => {
                     <div>
                         <p>Name: {profile.name}</p>
                         <p>Bio: {profile.bio ? profile.bio : "User has no bio :("}</p>
+{userId === auth.currentUser.uid && (
+<>
                         <input
                             type="text"
                             value={newName}
                             onChange={(e) => setNewName(e.target.value)}
                             placeholder="Enter new name"
                         />
-      {userId === auth.currentUser.uid && (
                         <button onClick={() => updateName()}>Update Name</button>
+</>
       )}
-
+      {userId === auth.currentUser.uid && (
+<>
                         <input
                             type="text"
                             value={newBio}
                             onChange={(e) => setNewBio(e.target.value)}
                             placeholder="Enter new bio"
                         />
-      {userId === auth.currentUser.uid && (
 
                         <button onClick={() => updateBio()}>Update Bio</button>
-      )}
+</>      
+)}
 
                     </div>
                 ) : (
