@@ -36,8 +36,8 @@ const Login = () => {
                     <img src="img/logo.png" class="logo" />
                 </a>
             </nav>
-            <h2>Login</h2>
-            <form onSubmit={handleLogin}>
+            <h2 class="header2">Login</h2>
+            <form onSubmit={handleLogin} className="form">
                 <div>
                     <label>Email:</label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -52,7 +52,7 @@ const Login = () => {
                 </div>
             </form>
             {error && <div>{error}</div>}
-            <p>Don't have an account? <Link to="/register">Register</Link></p>
+            <p class="register">Don't have an account? <Link to="/register">Register</Link></p>
             
         </div>
     );

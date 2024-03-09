@@ -68,7 +68,7 @@ export function ProductReport({product}) {
   return (
     <>
       {user?.uid !== product?.sellerID &&
-        <Button variant="secondary" onClick={openReport}>Report item</Button>}
+        <Button variant="secondary" onClick={openReport} className="report">Report item</Button>}
 
       <Modal show={show} onHide={closeReport}>
         <Modal.Header closeButton>

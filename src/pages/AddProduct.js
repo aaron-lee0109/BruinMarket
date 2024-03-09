@@ -90,16 +90,15 @@ export const AddProduct = () => {
 
 
     return (
-        <div className='container'>
+        <div>
             <Navbar />
             <br/>
-            <h2>Add your product</h2>
-            <hr/>
+            <h2 class="header2">Add your product</h2>
             {successMsg&&<>
-                <div className='success-msg'>{successMsg}</div>
+                <div className='success-msg whitetext'>{successMsg}</div>
                 <br/>
             </>}
-            <form autoComplete="off" className="form-group" onSubmit={handleAddProduct}>
+            <form autoComplete="off" className="form addform form-group" onSubmit={handleAddProduct}>
                 <label>Product Name</label>
                 <br/>
                 <input type="text" className='form-control' required onChange={(e)=>setName(e.target.value)} value={name} />

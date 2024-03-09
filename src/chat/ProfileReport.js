@@ -67,7 +67,8 @@ export function ProfileReport({profile}) {
   return (
     <>
       {user?.uid !== profile?.uid &&
-        <Button variant="secondary" onClick={openReport}>Report profile</Button>}
+        <Button variant="secondary" onClick={openReport} className="report">Report profile</Button>
+      }
 
       <Modal show={show} onHide={closeReport}>
         <Modal.Header closeButton>

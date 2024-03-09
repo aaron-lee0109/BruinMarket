@@ -86,7 +86,6 @@ export const Navbar = () => {
                   <li 
                     key={item.id}
                     className={item.cName}
-                    class="dropdown"
                     onMouseEnter={() => setDropdown(true)}
                     onMouseLeave={() => setDropdown(false)}
                   >
@@ -96,19 +95,26 @@ export const Navbar = () => {
                 );
               }
               return (
-                <li key={item.id} className={item.cName} class="dropdown">
+                <li key={item.id} className={item.cName}>
                   <Link to={item.path}>{item.title}</Link>
                 </li>
               );
             })}
           </ul>
-          <Link to={profileLink} className="nav-link">
-            Profile
-          </Link>
           <Link onClick={OpenChatWindow} className="nav-link">
             Chat
           </Link>
+          <Link to={profileLink} className="nav-link">
+            Profile
+          </Link>
+        <div class="search-signout">
           <Signout />
+          <Link to="/search" className="nav-link">
+            <img
+                 src="/img/search.png"
+                />
+          </Link>
+        </div>
       </nav>
     </>
   );

@@ -48,14 +48,14 @@ const Register = () => {
     };
 
     return (
-        <div>
+        <div class="registerpage">
             <nav class="nav">
                 <a href="/" class="name">
                     <img src="img/logo.png" class="logo" />
                 </a>
             </nav>
-            <h2>Register</h2>
-            <form onSubmit={handleRegister}>
+            <h2 class="header2">Register</h2>
+            <form onSubmit={handleRegister} className="form">
                 <div>
                     <label>Email:</label>
                     <input type="email" placeholder="Enter your UCLA email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -77,7 +77,7 @@ const Register = () => {
                 </div>
             </form>
             {error && <div>{error}</div>}
-            <p>Already have an? <Link to="/login">Login</Link></p>
+            <p class="register">Already have an account? <Link to="/login"><a>Login</a></Link></p>
         </div>
     );
 };
