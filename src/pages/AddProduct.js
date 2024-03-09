@@ -16,6 +16,7 @@ export const AddProduct = () => {
     const[category, setCategory] = useState('');
 
     const[imageError, setImageError] = useState('');
+    const[priceError, setPriceError] = useState('');
     const[successMsg, setSuccessMsg] = useState('');
     const[uploadError, setUploadError] = useState('');
 
@@ -45,6 +46,10 @@ export const AddProduct = () => {
         if(image == null) {
             return;
         }
+        if(Number(price) < 0) {
+            setPriceError('Please add a valid price');
+            return;
+        } 
         const imgPath = image.name + v4()
         // we store the image name in our firebase storage in folder product images (for ease we put that task in a function)
         const storageRef = ref(storage, `product-images/${imgPath}`);
@@ -111,6 +116,10 @@ export const AddProduct = () => {
                 <label>Product Price</label>
                 <br/>
                 <input type="number" className='form-control' required onChange={(e)=>setPrice(e.target.value)} value={price} />
+                {priceError&&<>
+                    <br/>
+                    <div className='error-msg'>{priceError}</div>
+                </>}
                 <br/>
                 <label>Product Category</label>
                 <br/>
