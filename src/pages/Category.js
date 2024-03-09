@@ -30,7 +30,7 @@ export const Category = () => {
     return (
         <div>
             <Navbar />
-            <h1>{categType} Products</h1>
+            <h1 className="category-heading">{categType} Products</h1>
             <section className='user-products'>
                 {products.length > 0 && ( // if we have at least 1 product, then display those products on our homepage
                     <div className="container-fluid">

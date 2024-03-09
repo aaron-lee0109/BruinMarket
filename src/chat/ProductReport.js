@@ -67,7 +67,7 @@ export function ProductReport({product}) {
 
   return (
     <>
-      <Button variant="outline-secondary" onClick={openReport}>Report item</Button>
+      <Button variant="outline-secondary" onClick={openReport}className="report">Report item</Button>
 
       <Modal show={show} onHide={closeReport}>
         <Modal.Header closeButton>

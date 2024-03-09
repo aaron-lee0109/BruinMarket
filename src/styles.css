@@ -13,35 +13,146 @@ code {
     monospace;
 }
 
+/* Login and Register */
+/* Login Form */
+.header2 {
+    text-align: center;
+    color: white;
+}
+
+.register {
+    text-align: center;
+    color: white;
+    font-weight: bold;
+}
+
+.register a {
+    color: white;
+}
+
+.whitetext {
+    color: white;
+    text-align:center;
+}
+
+.form {
+  max-width: 300px;
+  margin: 40px auto;
+  padding: 20px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.registerpage .form {
+    max-width: 400px;
+}
+
+.addform {
+    max-width: 500px;
+}
+
+.form h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.form label {
+  display: block;
+  margin-bottom: 5px;
+    color: black;
+}
+
+.form input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.form button {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  background-color: rgb(39,116,174);
+  color: #fff;
+  cursor: pointer;
+  font-size: 1em;
+}
+
+.form p {
+  text-align: center;
+  margin-top: 20px;
+}
+
+form a {
+  color: #333;
+  text-decoration: none;
+}
+
+form a:hover {
+  text-decoration: underline;
+}
+
+form div {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+/* End of Login Page */
+
 /* Navbar */
 /* Header */
 .nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 12vh;
+  height: auto;
   padding: 1vh 4vw 0.5%;
   background-color: rgb(39, 116, 174);
 }
 
 .logo {
-  height: 12vh;
+  height: 10.5vh;
   margin-left: 2vw;
   display: flex;
-  align-items: grid;
+  align-items: center;
 }
 
-.nav-items li {
+.nav-items {
+  display: flex;
+  align-items: center; 
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+}
+
+.nav-items > li {
   list-style-type: none;
+  position: relative;
+}
+
+
+.nav-items > li:hover > .dropdown {
+  display: block;
 }
 
 .dropdown {
   position: absolute;
   left: 0;
+  top: 100%;
+  z-index: 1000;
   display: none;
   background-color: rgb(39, 116, 174);
   padding: 1vh 4vw;
-    
+}
+
+.dropdown li {
+    padding: 0.5vh 4vw;
 }
 
 .nav-items:hover .dropdown {
@@ -72,6 +183,15 @@ code {
   margin-right: 2vw;
 }
 
+.nav-link > img {
+    height: 1rem;
+    color: white;
+}
+
+.search-signout {
+    display: flex;
+}
+
 .signout {
   color: black;
   font-weight: bold;
@@ -81,12 +201,28 @@ code {
   border-radius: 35px;
 }
 
-/* End of navbar */
+.categories-submenu {
+  position: absolute;
+  background-color: rgb(39, 116, 174);
+  min-width: 160px;
+  padding: 20px;
+  z-index: 1000;
+  list-style-type: none;
+}
+
+.categories-submenu.clicked {
+  display: block; 
+}
+
+/* You might want to position the dropdown relative to its parent */
+.nav-item { /* This should be the class of the parent element of your dropdown */
+  position: relative; /* Set the position context for absolute positioning */
+}
 
 /* Top page section */
 .header {
   background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-    url("../public/img/ucla.jpeg");
+    url("/public/img/ucla.jpeg");
   background-position: center;
   background-size: cover;
   background-repeat: no-repeat;
@@ -198,6 +334,81 @@ code {
 /* End of chat section */
 
 /* Product listing */
+.product {
+    background-color: white;
+    margin: 10px;
+    padding: 30px;
+    border-radius: 20px;
+    color: black;
+}
+.product-page {
+  max-width: 800px;
+  margin: auto;
+  background: #fff;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.product-img img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+.product-name {
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.product-seller,
+.product-description,
+.product-category,
+.product-price {
+  font-size: 1rem;
+  margin-top: 0.5rem;
+  color: #333;
+}
+
+.product-seller a {
+  color: #0275d8;
+  text-decoration: none;
+}
+
+.product-seller a:hover {
+  text-decoration: underline;
+}
+
+button {
+  background-color: #5cb85c;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.float-end {
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .product-page {
+    padding: 1rem;
+      margin-left: 10%;
+      margin-right: 10%;
+  }
+
+  .float-end {
+    position: static;
+    margin-top: 1rem;
+  }
+}
+
 .all-products {
     color: white;
     margin-top: 0.5rem;
@@ -209,11 +420,11 @@ code {
     color: white;
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .products-box .product {
-    margin-left: 2rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
 }
 
 .products-box .product:hover {
@@ -230,7 +441,98 @@ code {
 }
 
 .product-price {
-    color: rgb(255, 209, 0);
+    margin-bottom: 10px;
+}
+
+.category-heading {
+    color: white;
+    text-align: center;
+}
+
+.product-page {
+    text-align: center;
 }
 
 /* End product listing */
+
+/* Profile page */
+.user-info {
+  background: #fff;
+  border-radius: 5px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin: 2em auto;
+  padding: 2em;
+  max-width: 600px;
+  text-align: center;
+}
+
+.user-info h2 {
+  color: #333;
+  margin-bottom: 1em;
+    text-align: center;
+}
+
+.user-info p {
+  color: #666;
+  line-height: 1.6;
+    text-align: center;
+}
+
+.user-info input, .user-info button {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 10px;
+  width: calc(100% - 22px); 
+  margin-bottom: 1em;
+}
+
+.user-info button {
+  background-color: rgb(39,116,174);
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.delete-product {
+  background-color: #d9534f;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.delete-product:hover,
+.delete-product:focus {
+  background-color: #c9302c;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-product:active {
+  background-color: #ac2925;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  transform: translateY(1px);
+}
+
+.user-products {
+    margin-bottom: 20px;
+}
+
+.user-products {
+    color: white;
+}
+
+.report {
+    background-color: #E43939 !important;
+    color: white !important;
+    border: none !important;
+    margin-top: 10px;
+}
+
+/* End profile page */

@@ -29,9 +29,9 @@ const ForgotPassword = () => {
                     <img src="img/logo.png" class="logo" />
                 </a>
             </nav>
-            <h2>Reset Password</h2>
-            <p>Forgot your password? Enter your UCLA Email and we'll send you a link to reset your password</p>
-            <form onSubmit={sendResetEmai}>
+            <h2 class="header2">Reset Password</h2>
+            <p class="whitetext">Forgot your password? Enter your UCLA Email and we'll send you a link to reset your password!</p>
+            <form onSubmit={sendResetEmai} className="form">
                 <div>
                     <label>Email:</label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -40,7 +40,7 @@ const ForgotPassword = () => {
                     <button type="submit">Send reset link</button>
                 </div>
             </form>
-            <p><Link to="/login">Back to login</Link></p>
+            <p class="register"><Link to="/login">Back to login</Link></p>
         </div>
     );
 };

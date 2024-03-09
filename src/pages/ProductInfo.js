@@ -30,9 +30,11 @@ export const ProductInfo = () => {
         <div>
             <Navbar />
             <br />
+            <div className="product-page">
             <div className='product-img'>
                 <img src={product.url} alt='product-img' />
             </div>
+            <ProductReport product={product} className="report-product"/>
             <div className='product-name'>{product.name}</div>
             <div className='product-seller'>
                 Sold by: <Link to={`/profile/${product.sellerID}`}>{product.seller}</Link>
@@ -41,7 +43,7 @@ export const ProductInfo = () => {
             <div className='product-category'>Category: {product.category}</div>
             <div className='product-price'>Price: ${product.price}</div>
             <div className=''><Button onClick={(e) => { OpenChatWindow(product) }}>Chat With {product.seller}</Button></div>
-            <div className='float-end'><ProductReport product={product}/></div>
+            <div className='float-end'></div></div>
         </div>
     )
 }

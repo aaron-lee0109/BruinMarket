@@ -36,7 +36,7 @@ const Found = ({ searching }) => {
         <div>
           {filteredProducts.length > 0 && ( // At least one match
             <div className="container-fluid">
-              <h1>Products</h1>
+              <h1 class="header2">Products</h1>
               <div className="products-box">
                 <Products products={filteredProducts} />
               </div>
@@ -58,8 +58,8 @@ const Search = () => {
     return (
     <div>
         <Navbar />
-        <h2>Search</h2>
-        <div>
+        <h2 class="header2">Search</h2>
+        <div class="form">
             <input placeholder="Type to search..." type="text" className="searchBar" onChange={(e) => setInput(e.target.value)}/>
             <button onClick={() => {setSearching(input)}}>Search</button>
         </div>
