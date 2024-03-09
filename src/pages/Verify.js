@@ -6,6 +6,7 @@ import { useNavigate, Link } from 'react-router-dom';
 const ForgotPassword = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     const resendVerification = async (e) => {
@@ -20,8 +21,14 @@ const ForgotPassword = () => {
                 })
         }
         catch (error){
-            const errorCode = error.code;
-            const errorMessage = error.message;
+            switch(error.code) {
+                case "auth/user-not-found":
+                case "auth/invalid-credential":
+                    setError("Incorrect email or password")
+                    break;
+                default:
+                    setError(error.message)
+            }
         }
     }
 
@@ -33,7 +40,7 @@ const ForgotPassword = () => {
                 </a>
             </nav>
             <h2 class="header2">Resend Verification Link</h2>
-            <p class="whitetext">Verification link expired? Enter your UCLA email and password, and we'll send you a new link to verify your email</p>
+            <p class="whitetext">Verification link expired? Enter your UCLA email and password, and we'll send you a new link to verify your email!</p>
             <form onSubmit={resendVerification} className="form">
                 <div>
                     <label>Email:</label>
@@ -42,6 +49,9 @@ const ForgotPassword = () => {
                 <div>
                     <label>Password:</label>
                     <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                </div>
+                <div>
+                    {error && <div>{error}</div>}
                 </div>
                 <div>
                     <button type="submit">Resend verification link</button>

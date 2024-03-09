@@ -26,7 +26,14 @@ const Login = () => {
             })
             // If login is successful, you can redirect the user to another page or perform any other action
         } catch (error) {
-            setError(error.message);
+            switch(error.code) {
+                case "auth/user-not-found":
+                case "auth/invalid-credential":
+                    setError("Incorrect email or password")
+                    break;
+                default:
+                    setError(error.message)
+            }
         }
     };
 
@@ -50,10 +57,13 @@ const Login = () => {
                 </div>
                 <p><Link to="/resetpassword">Forgot password?</Link></p>
                 <div>
+                    {error && <div>{error}</div>}  
+                </div>
+                <div>
                     <button type="submit">Login</button>
                 </div>
             </form>
-            {error && <div>{error}</div>}
+
             <p class="register">Don't have an account? <Link to="/register">Register</Link></p>
             
         </div>
