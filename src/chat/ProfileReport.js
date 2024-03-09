@@ -1,9 +1,9 @@
 // ProfileReport.js
 
 import { db } from '../authentication/Config';
-import { addDoc, collection, doc, getDoc, getDocs, setDoc, updateDoc, query, where, orderBy, limit } from '@firebase/firestore';
+import { collection, doc, getDoc, setDoc } from '@firebase/firestore';
 import { Context } from '../authentication/AuthContext';
-import { useContext, useState, useEffect, useRef} from 'react';
+import { useContext, useState, useRef } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
@@ -36,7 +36,6 @@ export function ProfileReport({profile}) {
     event.preventDefault();
     if (!user?.uid) return;
     if (!formReason?.current?.value?.trim()) return;
-    console.log(formReason.current.value.trim());
 
     const report = {
       reason: formReason.current.value.trim(),
@@ -67,7 +66,9 @@ export function ProfileReport({profile}) {
 
   return (
     <>
-      <Button variant="outline-secondary" onClick={openReport} className="report">Report profile</Button>
+      {user?.uid !== profile?.uid &&
+        <Button variant="secondary" onClick={openReport} className="report">Report profile</Button>
+      }
 
       <Modal show={show} onHide={closeReport}>
         <Modal.Header closeButton>

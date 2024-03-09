@@ -116,7 +116,6 @@ const Profile = () => {
                             placeholder="Enter new bio"
                         />
                         <button onClick={() => updateBio()}>Update Bio</button>
-
                     </div>
                 ) : (
                     <p>Loading profile...</p>

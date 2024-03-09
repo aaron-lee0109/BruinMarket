@@ -1,7 +1,7 @@
 // ChatContext.js
 
 import { db } from '../authentication/Config';
-import { addDoc, collection, doc, getDoc, getDocs, updateDoc, query, where, orderBy, limit } from '@firebase/firestore';
+import { addDoc, collection, doc, getDoc, getDocs, updateDoc, query, where, limit } from '@firebase/firestore';
 import { createContext, useState, useEffect, useRef, useContext } from 'react';
 
 import Col from 'react-bootstrap/Col';
@@ -15,27 +15,11 @@ import TimeAgo from 'react-timeago';
 
 import { Context } from '../authentication/AuthContext';
 
-// For test and demo
-import { faker } from '@faker-js/faker';
-
-/*
-//TODO:
-Convert Chat as component
-Convert Message as component
-Add unreadMessages to Navbar
-Add button on product item - DONE
-
-Security rules for FireStore:
-read/write chats: sellerId == auth.user.uid || buyerId == auth.user.uid
-  - indices for filtering and sortning multi fields?
-*/
-
 // Collection Refs
 const chatCollectionRef = collection(db, 'chats');
 
 // https://firebase.google.com/docs/database/web/structure-data#flatten_data_structures
 const messageCollectionRef = (chatId) => collection(db, 'chats-messages', chatId, 'messages')
-const productCollectionRef = collection(db, 'products');
 
 export const Chat = createContext();
 
@@ -300,7 +284,7 @@ export function ChatContext({ children }) {
                       return (
                         <Row key={c.id}
                           className={'pt-1 pb-1 ps-1 pe-0 m-0' + (c.id === activeChat?.id ? ' active-chat' : ' item-chat')}
-                          title={JSON.stringify(c, null, '\t')} onClick={async () => onActiveChatSelect(c)}>
+                          onClick={async () => onActiveChatSelect(c)}>
 
                           <Col xs='auto'><Image src={c.productPhoto} alt={c.productName} className='chat-product-image' />
                           </Col>
@@ -348,7 +332,7 @@ export function ChatContext({ children }) {
                               return (
                                 activeChat?.id === m.chatId && (
                                   m.authorId === user?.uid
-                                    ? <Row key={m.id} className='pt-1 pb-1 m-0' title={JSON.stringify(m, null, '\t')}>
+                                    ? <Row key={m.id} className='pt-1 pb-1 m-0'>
                                       <Row className='text-end m-0 p-2 pb-0'>
                                         <span>{m.text}</span>
                                       </Row>
@@ -357,7 +341,7 @@ export function ChatContext({ children }) {
                                         <Col xs='auto'><i><TimeAgo date={m.createdAt} minPeriod='30'></TimeAgo></i></Col>
                                       </Row>
                                     </Row>
-                                    : <Row key={m.id} className='pt-1 pb-1 m-0' title={JSON.stringify(m, null, '\t')}>
+                                    : <Row key={m.id} className='pt-1 pb-1 m-0'>
                                       <Row className='m-0 p-2 pb-0'>
                                         <span>{m.text}</span>
                                       </Row>
