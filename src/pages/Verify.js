@@ -32,9 +32,9 @@ const ForgotPassword = () => {
                     <img src="img/logo.png" class="logo" />
                 </a>
             </nav>
-            <h2>Resend Verification Link</h2>
-            <p>Verification link expired? Enter your UCLA email and password, and we'll send you a new link to verify your email</p>
-            <form onSubmit={resendVerification}>
+            <h2 class="header2">Resend Verification Link</h2>
+            <p class="whitetext">Verification link expired? Enter your UCLA email and password, and we'll send you a new link to verify your email</p>
+            <form onSubmit={resendVerification} className="form">
                 <div>
                     <label>Email:</label>
                     <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
@@ -47,7 +47,7 @@ const ForgotPassword = () => {
                     <button type="submit">Resend verification link</button>
                 </div>
             </form>
-            <p><Link to="/login">Back to login</Link></p>
+            <p className="register"><Link to="/login">Back to login</Link></p>
         </div>
     );
 };
