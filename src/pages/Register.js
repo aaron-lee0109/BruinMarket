@@ -71,10 +71,13 @@ const Register = () => {
                     <input value={bio} placeholder="Tell us about yourself" onChange={(e) => setBio(e.target.value)} />
                 </div>
                 <div>
+                    {error && <div>{error}</div>}  
+                </div>
+                <div>
                     <button type="submit">Register</button>
                 </div>
             </form>
-            {error && <div>{error}</div>}
+
             <p class="register">Already have an account? <Link to="/login"><a>Login</a></Link></p>
         </div>
     );
