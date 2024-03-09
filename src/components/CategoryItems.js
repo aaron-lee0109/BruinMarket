@@ -54,7 +54,7 @@ export const CategoryItems = [
 
     {
         id: 4,
-        title: 'Home&Kitchen',
+        title: 'Home & Kitchen',
         path: '/Homekitchen',
         cName: 'dropdown-link'
     },

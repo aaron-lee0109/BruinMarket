@@ -107,7 +107,9 @@ const Profile = () => {
                             onChange={(e) => setNewName(e.target.value)}
                             placeholder="Enter new name"
                         />
+      {userId === auth.currentUser.uid && (
                         <button onClick={() => updateName()}>Update Name</button>
+      )}
 
                         <input
                             type="text"
@@ -115,7 +117,11 @@ const Profile = () => {
                             onChange={(e) => setNewBio(e.target.value)}
                             placeholder="Enter new bio"
                         />
+      {userId === auth.currentUser.uid && (
+
                         <button onClick={() => updateBio()}>Update Bio</button>
+      )}
+
                     </div>
                 ) : (
                     <p>Loading profile...</p>

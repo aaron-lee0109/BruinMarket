@@ -204,7 +204,7 @@ form div {
 .categories-submenu {
   position: absolute;
   background-color: rgb(39, 116, 174);
-  min-width: 160px;
+  min-width: 170px;
   padding: 20px;
   z-index: 1000;
   list-style-type: none;
