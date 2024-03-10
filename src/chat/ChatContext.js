@@ -31,7 +31,7 @@ export function ChatContext({ children }) {
   const [chatOpen, setChatOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [unreadChats, setUnreadChats] = useState(0);
-  const [allowAutoRefresh, setAllowAutoRefresh] = useState(false);
+  const [allowAutoRefresh, setAllowAutoRefresh] = useState(true);
 
   const windowMessage = useRef();
   const windowMessageFooter = useRef();
@@ -237,9 +237,15 @@ export function ChatContext({ children }) {
 
   // useEffect calls list of messages into messages var
   useEffect(() => {
-    if (chatOpen && user?.uid) {
-      (async () => { await ListChats() })()
-    }
+    const reloadTimer = setInterval(
+      () => {
+        if (chatOpen && user?.uid && allowAutoRefresh) {
+          (async () => { 
+            await ListChats() 
+          })()
+        }
+      }, 10000
+    );
   }, [chatOpen]);
 
   // load messages for active chat
@@ -256,7 +262,7 @@ export function ChatContext({ children }) {
         if (chatOpen && activeChat && allowAutoRefresh) {
           (async () => { await RefreshMessages() })()
         }
-      }, 10000
+      }, 5000
     );
     return () => clearInterval(reloadTimer);
   }, [chatOpen, activeChat, allowAutoRefresh]);
