@@ -12,10 +12,12 @@ const ForgotPassword = () => {
     const resendVerification = async (e) => {
         e.preventDefault();
         try{
+            // Need to sign in user to get currentUser for sendEmailVerification
             await signInWithEmailAndPassword(auth, email, password);
             sendEmailVerification(auth.currentUser)
                 .then(() => {
                     alert("Email sent! Verify email with link.");
+                    // Sign out user after resending email verification link
                     auth.signOut();
                     navigate("/login");
                 })
@@ -24,13 +26,13 @@ const ForgotPassword = () => {
             switch(error.code) {
                 case "auth/user-not-found":
                 case "auth/invalid-credential":
-                    setError("Incorrect email or password")
+                    setError("Incorrect email or password");
                     break;
                 default:
-                    setError(error.message)
+                    setError(error.message);
             }
         }
-    }
+    };
 
     return (
         <div>
@@ -44,11 +46,11 @@ const ForgotPassword = () => {
             <form onSubmit={resendVerification} className="form">
                 <div>
                     <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <input type="email" placeholder="Enter your UCLA email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <div>
                     <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <div>
                     {error && <div>{error}</div>}

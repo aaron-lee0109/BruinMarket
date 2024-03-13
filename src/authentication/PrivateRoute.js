@@ -5,6 +5,7 @@ import { Context } from './AuthContext';
 export default function PrivateRoute({ children }) {
     const { user } = useContext(Context);
 
+    // If user is not signed in, bring them back to login page
     if(!user) {
         return <Navigate to = "/login" replace/>
     }

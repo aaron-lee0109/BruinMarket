@@ -16,6 +16,7 @@ const Register = () => {
         e.preventDefault();
         try{
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            // Check if email domain is a UCLA domain
             if (!(userCredential.user.email.endsWith("@ucla.edu") || 
                   userCredential.user.email.endsWith("@g.ucla.edu"))) {
                 alert("Invalid email! Please use a UCLA email.");
@@ -23,8 +24,6 @@ const Register = () => {
                 return;
             }
             await sendEmailVerification(auth.currentUser);
-
-            // updateProfile wasn't working properly, so fixed it (was using outdated syntax)
             updateProfile(auth.currentUser, {
                 displayName: name,
             });
@@ -39,7 +38,20 @@ const Register = () => {
             navigate("/login");
         }
         catch (error){
-            setError(error.message);
+            switch(error.code) {
+                case "auth/email-already-exists":
+                case "auth/email-already-in-use":
+                    setError("Email already in use");
+                    break;
+                case "auth/weak-password":
+                    setError("Password should be at least 6 characters.");
+                    break;
+                case "auth/invalid-email":
+                    setError("Invalid email. Please use a UCLA email.");
+                    break;
+                default:
+                    setError(error.message);
+            }
         }
     };
 
@@ -66,7 +78,7 @@ const Register = () => {
                 </div>
                 <div>
                     <label>Bio:</label>
-                    <input value={bio} placeholder="Tell us about yourself" onChange={(e) => setBio(e.target.value)} />
+                    <input value={bio} placeholder="Tell us about yourself (optional)" onChange={(e) => setBio(e.target.value)} />
                 </div>
                 <div>
                     {error && <div>{error}</div>}  

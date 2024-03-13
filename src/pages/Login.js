@@ -13,21 +13,23 @@ const Login = () => {
         e.preventDefault();
         try {
             await signInWithEmailAndPassword(auth, email, password).then(authUser => {
-                console.log(authUser.user.emailVerified);
+                // Check if user's email is verified when they sign in
                 if(!authUser.user.emailVerified) { 
                     alert("Please verify email before signing in!");
+                    // Sign them out if email isn't verified
                     auth.signOut();
                 }
                 else {
                     navigate("/");
                 }
             })
-            // If login is successful, you can redirect the user to another page or perform any other action
         } catch (error) {
             switch(error.code) {
-                case "auth/user-not-found":
                 case "auth/invalid-credential":
-                    setError("Incorrect email or password")
+                    setError("Incorrect email or password.");
+                    break;
+                case "auth/too-many-requests":
+                    setError("Account temporarily disabled due to multiple failed login attempts. Reset your password or try again later.")
                     break;
                 default:
                     setError(error.message)
@@ -46,12 +48,12 @@ const Login = () => {
             <form onSubmit={handleLogin} className="form">
                 <div>
                     <label>Email:</label>
-                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} required />
+                    <input type="email" placeholder="Enter your UCLA email" value={email} onChange={(e) => setEmail(e.target.value)} required />
                 </div>
                 <p><Link to="/verifyemail">Verification link expired?</Link></p>
                 <div>
                     <label>Password:</label>
-                    <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
+                    <input type="password" placeholder="Enter your password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <p><Link to="/resetpassword">Forgot password?</Link></p>
                 <div>

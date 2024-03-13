@@ -10,6 +10,7 @@ export function AuthContext({children}) {
 
     useEffect(() => {
         let unsubscribe;
+        // Check if a user is currently signed in
         unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setLoading(false);
             if (currentUser) {
@@ -19,6 +20,7 @@ export function AuthContext({children}) {
                 setUser(null);
             }
         });
+        // Return unsubscribe function to prevent infinite rendering loop
         return () => {
             if(unsubscribe) {
                 unsubscribe();
