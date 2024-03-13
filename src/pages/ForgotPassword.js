@@ -11,7 +11,7 @@ const ForgotPassword = () => {
     const sendResetEmai = async (e) => {
         e.preventDefault();
         try{
-            sendPasswordResetEmail(auth, email)
+            await sendPasswordResetEmail(auth, email)
                 .then(() => {
                     alert("Email sent! Reset password with link.");
                     navigate("/login");
