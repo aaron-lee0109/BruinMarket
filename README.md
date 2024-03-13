@@ -12,6 +12,9 @@ We’re sure there have been countless times when students no longer needed some
 ### Stack
 For our stack, we used [Firebase](https://firebase.google.com/) and [React](https://react.dev/).
 
+### Link to public repository
+https://github.com/aaron-lee0109/BruinMarket.git
+
 # Project Setup
 
 ## Prerequisites
