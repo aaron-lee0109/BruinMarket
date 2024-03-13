@@ -1,5 +1,3 @@
-//AddProduct.js
-
 import React, { useState } from "react";
 import { storage, db, auth } from "../authentication/Config";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -36,7 +34,7 @@ export const AddProduct = () => {
             }
         }
         else{
-            console.log('Please select your file'); // CHANGE LATER 
+            console.log('Please select your file');
         }
     }
 
@@ -49,7 +47,7 @@ export const AddProduct = () => {
         if(Number(price) < 0) {
             setPriceError('Please add a valid price');
             return;
-        } 
+        }
         const imgPath = image.name + v4()
         // we store the image name in our firebase storage in folder product images (for ease we put that task in a function)
         const storageRef = ref(storage, `product-images/${imgPath}`);
@@ -69,7 +67,7 @@ export const AddProduct = () => {
                     price: formattedPrice,
                     imgPath,
                     url, 
-                    category, // added category field for database
+                    category,
                     seller: user.displayName,
                     sellerID: user.uid
                 }).then(()=>{ // if it was successful, then say it was so, and then reset the form

@@ -1,10 +1,7 @@
-// ProductReport.js
-
 import { db } from '../authentication/Config';
 import { collection, doc, getDoc, setDoc } from '@firebase/firestore';
 import { Context } from '../authentication/AuthContext';
 import { useContext, useState, useRef } from 'react';
-
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';

@@ -1,4 +1,3 @@
-// ProfileProducts.js
 import React from 'react';
 import { auth, db, storage } from '../authentication/Config'
 import { ref, deleteObject } from 'firebase/storage'
@@ -6,6 +5,7 @@ import { collection, deleteDoc, doc, query, where, getDocs } from "firebase/fire
 
 function ProfileProducts({ products, UID }){
 
+    // clicking on delete button should delete item completely from database
     const delProduct = async (id, imgPath) => {
         const docRef = doc(db, 'products', id);
         const chatRef = query(collection(db, "chats"), where ("productId", "==", id))
@@ -24,7 +24,7 @@ function ProfileProducts({ products, UID }){
         })
 
     };
-
+    // if on your profile page, display products along with delete buttons
     if(auth.currentUser.uid === UID){
         return products.map(item =>(
             <div>
@@ -38,7 +38,7 @@ function ProfileProducts({ products, UID }){
                 <button className='delete-product' onClick={(e) => delProduct(item.id, item.imgPath)}>Delete Item</button>
             </div>
         ))
-    } else{
+    } else{ // if someone else's profile, display products without delete buttons
         return products.map(item =>(
             <div key = {item.id} className='product' onClick={() => window.location.href = `/productinfo/${item.id}`}>
                 <div className='product-img'>

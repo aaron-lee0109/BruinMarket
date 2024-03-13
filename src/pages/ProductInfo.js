@@ -1,22 +1,19 @@
-// ProductInfo.js
-
 import React, { useContext, useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { db } from "../authentication/Config";
 import { doc, getDoc } from "firebase/firestore";
-// import { onAuthStateChanged } from "firebase/auth";
 import { Navbar } from '../components/Navbar'
 import { Link } from "react-router-dom";
-import { Chat } from '../chat/ChatContext'; // for chat
-import { Button } from 'react-bootstrap'; // for chat
-import { Context } from '../authentication/AuthContext';
+import { Chat } from '../chat/ChatContext';
+import { Button } from 'react-bootstrap';
 import { ProductReport } from '../chat/ProductReport';
 
 export const ProductInfo = () => {
     const params = useParams()
     const [product, setProduct] = useState('');
-    const { OpenChatWindow } = useContext(Chat); // for chat
+    const { OpenChatWindow } = useContext(Chat);
 
+    // retrieve product data using the unique product ID number
     const getProductData = async () => {
         const productTemp = await getDoc(doc(db, "products", params.productid));
         setProduct({...productTemp.data(), id: productTemp.id});
@@ -25,7 +22,8 @@ export const ProductInfo = () => {
         getProductData()
     }, [])
 
-    return ( // add a URL to the product.seller 
+    // display product information (name, description, price, category, seller, chat button)
+    return (
         <div>
             <Navbar />
             <br />

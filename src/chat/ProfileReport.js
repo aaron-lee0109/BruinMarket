@@ -1,5 +1,3 @@
-// ProfileReport.js
-
 import { db } from '../authentication/Config';
 import { collection, doc, getDoc, setDoc } from '@firebase/firestore';
 import { Context } from '../authentication/AuthContext';

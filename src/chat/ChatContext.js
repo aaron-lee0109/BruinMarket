@@ -1,9 +1,6 @@
-// ChatContext.js
-
 import { db } from '../authentication/Config';
 import { addDoc, collection, doc, getDoc, getDocs, updateDoc, query, where, limit } from '@firebase/firestore';
 import { createContext, useState, useEffect, useRef, useContext } from 'react';
-
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';

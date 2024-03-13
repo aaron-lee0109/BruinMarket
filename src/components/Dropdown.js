@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { CategoryItems } from "./CategoryItems";
 import { Link } from "react-router-dom";
-// import "./Dropdown.css";
 
 export const Dropdown = () => {
 

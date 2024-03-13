@@ -1,5 +1,3 @@
-//Navbar.js
-
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { auth } from "../authentication/Config";
@@ -10,12 +8,11 @@ import { Signout } from "./Signout";
 import { Dropdown } from "./Dropdown";
 
 export const Navbar = () => {
-  const { OpenChatWindow } = useContext(Chat); // for chat
+  const { OpenChatWindow } = useContext(Chat);
   const [profileLink, setProfileLink] = useState('');
   const [dropdown, setDropdown] = useState(false);
 
   useEffect(() => {
-    // there was an issue where auth.currentUser.uid was causing an error when a user is not logged in. So I added a conditional checking first if we are logged in, and then setting the profile link accordingly. If we're not logged in, i just made it so that it redirects to the login page
     onAuthStateChanged(auth, (user) => {
       if(user) {
         setProfileLink(`/profile/${auth.currentUser.uid}`);

@@ -13,6 +13,7 @@ export const Category = () => {
     }
     const [products, setProducts] = useState([]);
 
+    // retrieve products from database depending on category type
     const getProducts = async () => {
         const q = query(collection(db, "products"), where ("category", "==", categType));
         const querySnapshot = await getDocs(q);

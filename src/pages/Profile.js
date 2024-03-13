@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { doc, updateDoc, getDoc, getDocs, where, collection, query } from "firebase/firestore";
-import { db, auth } from '../authentication/Config';
+import { db } from '../authentication/Config';
 import ProfileProducts from "../components/ProfileProducts";
 import { Navbar } from '../components/Navbar';
 import { ProfileReport } from '../chat/ProfileReport';
@@ -49,6 +49,7 @@ const Profile = () => {
         }
     }
 
+    // fetch profile data using userID
     useEffect(() => {
         const fetchProfile = async () => {
             try {
@@ -66,6 +67,7 @@ const Profile = () => {
         fetchProfile();
     }, [userId]);
 
+    // change heading of profile page depending whether its your profile page, or someone else's
     let profileTitle = "";
     let productTitle = "";
     if (auth.currentUser.uid === userId) {
@@ -76,6 +78,7 @@ const Profile = () => {
         productTitle = `${profile?.name}'s Products`;
     }
 
+    // get products sold by the specific user
     const getProducts = async () => {
         const q = query(collection(db, "products"), where("sellerID", "==", userId));
         const querySnapshot = await getDocs(q);
